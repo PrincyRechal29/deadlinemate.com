@@ -1,36 +1,43 @@
+﻿import { motion } from 'framer-motion';
+
 const steps = [
-  ['01', 'Add your modules', 'Create a clean workspace for each class, seminar, or project.'],
-  ['02', 'Add assignments, exams, and deadlines', 'Capture key dates, notes, weighting, and submission windows.'],
-  ['03', 'DeadlineMate creates a smart study plan', 'Turn due dates into manageable study sessions and priority tasks.'],
-  ['04', 'Get reminders and track your progress', 'Stay ahead with reminders, completion tracking, and weekly visibility.'],
+  ['01', 'Map your semester', 'Add modules, assessments, exam windows, and key academic milestones.'],
+  ['02', 'Prioritise the pressure', 'DeadlineMate ranks urgency by date, workload, and importance.'],
+  ['03', 'Follow the plan', 'Get daily focus blocks that make big deadlines feel manageable.'],
+  ['04', 'Protect momentum', 'Track progress, build streaks, and stay ahead of the semester curve.'],
 ];
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="px-4 py-20 sm:px-6 lg:px-8">
+    <section id="how-it-works" className="px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.3em] text-cyan-300">How it works</p>
-            <h2 className="mt-4 text-3xl font-black tracking-tight sm:text-5xl">From syllabus chaos to a weekly plan.</h2>
-          </div>
-          <div className="grid gap-4">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="eyebrow">How it works</p>
+          <h2 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">From deadline chaos to a weekly operating system.</h2>
+        </div>
+
+        <div className="relative mx-auto mt-16 max-w-4xl">
+          <div className="absolute left-6 top-0 hidden h-full w-px bg-gradient-to-b from-cyan-300 via-violet-300 to-emerald-300 md:block" />
+          <div className="space-y-6">
             {steps.map(([number, title, text], index) => (
-              <article
+              <motion.article
                 key={title}
-                className="glass-card reveal-card rounded-3xl border border-white/10 p-6 transition duration-300 hover:-translate-y-1 hover:border-emerald-300/40"
-                style={{ animationDelay: `${index * 90}ms` }}
+                initial={{ opacity: 0, x: -24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ delay: index * 0.08, type: 'spring', stiffness: 120, damping: 18 }}
+                className="glass-panel relative rounded-[1.5rem] p-6"
               >
-                <div className="flex flex-col gap-4 sm:flex-row">
-                  <span className="step-number grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white text-sm font-black text-slate-950">
+                <div className="flex flex-col gap-5 md:flex-row md:items-start">
+                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white text-sm font-black text-slate-950 shadow-lg shadow-cyan-500/20">
                     {number}
                   </span>
                   <div>
-                    <h3 className="text-xl font-bold text-white">{title}</h3>
-                    <p className="mt-2 leading-7 text-slate-300">{text}</p>
+                    <h3 className="text-2xl font-black text-slate-950">{title}</h3>
+                    <p className="mt-2 text-base leading-7 text-slate-600">{text}</p>
                   </div>
                 </div>
-              </article>
+              </motion.article>
             ))}
           </div>
         </div>

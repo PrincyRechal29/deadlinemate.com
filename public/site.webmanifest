@@ -1,0 +1,16 @@
+{
+  "name": "DeadlineMate",
+  "short_name": "DeadlineMate",
+  "description": "Student deadline planner for assignments, exams, modules, study sessions, reminders, and academic progress.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#dbeafe",
+  "theme_color": "#07111f",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml"
+    }
+  ]
+}
