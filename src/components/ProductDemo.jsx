@@ -1,4 +1,4 @@
-﻿import { Bell, BookOpenCheck, CalendarClock, CheckCircle2, Gauge, LayoutDashboard, LineChart, Settings } from 'lucide-react';
+import { Bell, BookOpenCheck, CalendarClock, CheckCircle2, LayoutDashboard, LineChart, Settings } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
@@ -9,6 +9,7 @@ const nav = [
   ['Analytics', LineChart],
   ['Settings', Settings],
 ];
+
 const plannerSets = [
   [45, 55, 65, 75, 85],
   [62, 42, 78, 56, 92],
@@ -17,14 +18,14 @@ const plannerSets = [
 
 const alerts = [
   'Research essay needs two focus sessions before Friday.',
-  'Statistics quiz moved up. Revision block added today.',
+  'Statistics quiz moved up — a revision block was added today.',
   'Group presentation is high priority for tomorrow.',
 ];
 
-const generatedStates = [
-  ['AI plan generated', 'Exam countdown synced', 'Module progress updated'],
-  ['Urgency score refreshed', 'Focus block scheduled', 'Reminder queue updated'],
-  ['Study streak protected', 'Weekly plan balanced', 'Deadline risk lowered'],
+const highlights = [
+  'Deadline urgency scoring for the week ahead',
+  'Focus blocks generated from due dates and exam pressure',
+  'Planner, analytics, and reminders in one clean view',
 ];
 
 export default function ProductDemo() {
@@ -33,96 +34,92 @@ export default function ProductDemo() {
   useEffect(() => {
     const timer = window.setInterval(() => {
       setLiveIndex((current) => (current + 1) % plannerSets.length);
-    }, 3900);
-
+    }, 4200);
     return () => window.clearInterval(timer);
   }, []);
 
   return (
-    <section id="product-demo" className="px-4 py-24 sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+    <section id="product-demo" className="px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
         <motion.div
-          initial={{ opacity: 0, x: -32 }}
+          initial={{ opacity: 0, x: -28 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          className="dashboard-frame rounded-[2rem] border border-white/10 bg-slate-950/90 p-3 text-white shadow-2xl shadow-indigo-300/40"
+          className="card overflow-hidden p-2 shadow-[var(--shadow-lg)]"
         >
-          <div className="grid overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#080b16] lg:grid-cols-[220px_1fr]">
-            <aside className="border-b border-white/10 bg-white/[0.03] p-5 lg:border-b-0 lg:border-r">
-              <div className="rounded-2xl bg-white/[0.05] p-4">
-                <p className="font-black">DeadlineMate</p>
-                <p className="mt-1 text-xs text-slate-500">Student workspace</p>
+          <div className="grid overflow-hidden rounded-[1rem] border border-slate-100 bg-white lg:grid-cols-[180px_1fr]">
+            <aside className="hidden border-r border-slate-100 bg-slate-50/60 p-4 lg:block">
+              <div className="rounded-xl bg-white p-3 shadow-[var(--shadow-sm)]">
+                <p className="text-sm font-bold text-slate-900">DeadlineMate</p>
+                <p className="mt-0.5 text-[11px] text-slate-500">Student workspace</p>
               </div>
-              <div className="mt-6 space-y-2">
+              <div className="mt-5 space-y-1">
                 {nav.map(([label, Icon], index) => (
-                  <motion.div
+                  <div
                     key={label}
-                    initial={{ opacity: 0, x: -14 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.06 }}
-                    className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold ${
-                      index === 0 ? 'bg-white text-slate-950' : 'text-slate-400'
+                    className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${
+                      index === 0 ? 'bg-indigo-600 text-white' : 'text-slate-500'
                     }`}
                   >
-                    <Icon size={17} />
+                    <Icon size={16} />
                     {label}
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </aside>
 
-            <div className="grid gap-5 p-5 xl:grid-cols-3">
-              <div className="motion-surface rounded-3xl border border-white/10 bg-white/[0.045] p-5 xl:col-span-2">
+            <div className="space-y-4 p-5">
+              <div className="rounded-2xl border border-slate-100 bg-white p-4">
                 <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-xl font-black">Weekly planner</p>
-                    <p className="text-sm text-slate-500">Your highest-impact study blocks</p>
-                  </div>
-                  <Gauge className="text-cyan-300" />
+                  <p className="text-base font-bold text-slate-900">Weekly planner</p>
+                  <span className="text-xs text-slate-400">Focus load</span>
                 </div>
-                <div className="mt-6 grid grid-cols-5 gap-3">
+                <div className="mt-5 grid grid-cols-5 gap-2.5">
                   {['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].map((day, index) => (
-                    <div key={day} className="rounded-2xl bg-slate-950/75 p-3">
-                      <p className="text-xs font-bold text-slate-500">{day}</p>
-                      <motion.div
-                        initial={{ height: 0 }}
-                        animate={{ height: `${plannerSets[liveIndex][index]}%` }}
-                        transition={{ duration: 0.8, delay: index * 0.08 }}
-                        className="mt-8 min-h-12 rounded-xl bg-gradient-to-t from-cyan-400 to-violet-300"
-                      />
+                    <div key={day} className="flex flex-col items-center gap-2">
+                      <div className="flex h-24 w-full items-end rounded-lg bg-slate-50 p-1.5">
+                        <motion.div
+                          initial={{ height: 0 }}
+                          animate={{ height: `${plannerSets[liveIndex][index]}%` }}
+                          transition={{ duration: 0.7, delay: index * 0.06 }}
+                          className="w-full rounded-md bg-gradient-to-t from-indigo-600 to-violet-400"
+                        />
+                      </div>
+                      <p className="text-[11px] font-medium text-slate-400">{day}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="rounded-3xl border border-rose-300/20 bg-rose-300/10 p-5">
-                <Bell className="text-rose-200" />
-                <p className="mt-5 font-black">Urgency alert</p>
-                <p className="mt-2 text-sm leading-6 text-rose-100">{alerts[liveIndex]}</p>
-              </div>
-
-              {generatedStates[liveIndex].map((item) => (
-                <div key={item} className="motion-surface rounded-3xl border border-white/10 bg-white/[0.045] p-5">
-                  <CheckCircle2 className="text-emerald-300" />
-                  <p className="mt-4 text-sm font-black">{item}</p>
+              <div className="flex items-start gap-3 rounded-2xl border border-rose-100 bg-rose-50 p-4">
+                <Bell className="mt-0.5 shrink-0 text-rose-500" size={18} />
+                <div>
+                  <p className="text-sm font-bold text-rose-900">Urgency alert</p>
+                  <p className="mt-1 text-sm leading-6 text-rose-700">{alerts[liveIndex]}</p>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, x: 32 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-100px' }}>
-          <p className="eyebrow">Interactive demo</p>
-          <h2 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">A real academic workflow, not another to-do list.</h2>
-          <p className="mt-6 text-lg leading-8 text-slate-600">
-            DeadlineMate presents the week like a command center: what is urgent, what to study, and which module needs attention next.
+        <motion.div
+          initial={{ opacity: 0, x: 28 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+        >
+          <p className="eyebrow">Product tour</p>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">
+            Your semester, finally under control.
+          </h2>
+          <p className="mt-5 text-lg leading-8 text-slate-600">
+            Plan deadlines, exams, modules, and focus sessions in one calm dashboard built for modern
+            university life.
           </p>
-          <div className="mt-8 grid gap-4">
-            {['Deadline urgency scoring', 'Focus blocks generated from due dates', 'Planner, analytics, and reminders in one view'].map((text) => (
-              <div key={text} className="glass-panel flex items-center gap-3 rounded-2xl p-4">
-                <CheckCircle2 className="text-emerald-300" size={20} />
-                <span className="font-bold text-slate-950">{text}</span>
+          <div className="mt-8 space-y-3">
+            {highlights.map((text) => (
+              <div key={text} className="card flex items-center gap-3 p-4">
+                <CheckCircle2 className="shrink-0 text-emerald-500" size={20} />
+                <span className="text-sm font-medium text-slate-800">{text}</span>
               </div>
             ))}
           </div>
