@@ -1,100 +1,58 @@
-import { ArrowRight, Menu, X } from 'lucide-react';
-import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import Logo from './Logo.jsx';
+import React from 'react';
+import { Logo } from './ui/Logo.jsx';
+import { Button } from './ui/Button.jsx';
+import { Icons } from './ui/icons.jsx';
 
-const navLinks = [
-  { label: 'Features', href: '#features' },
-  { label: 'How it works', href: '#how-it-works' },
-  { label: 'Pricing', href: '#pricing' },
-  { label: 'FAQ', href: '#faq' },
-];
-
-export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 24 });
-
-  useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
+export default function Navbar({ onCta }) {
+  const [prog, setProg] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement;
+      setProg(h.scrollTop / (h.scrollHeight - h.clientHeight || 1));
     };
-  }, [open]);
-
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  const links = [
+    ['Features', '#features'],
+    ['Product', '#product'],
+    ['Pricing', '#pricing'],
+    ['FAQ', '#faq'],
+  ];
   return (
-    <motion.header
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="fixed inset-x-0 top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-xl"
-    >
-      <motion.div
-        style={{ scaleX }}
-        className="absolute bottom-0 left-0 h-0.5 w-full origin-left bg-gradient-to-r from-indigo-600 to-violet-500"
-      />
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
-        <a href="#" aria-label="DeadlineMate home" className="transition hover:opacity-90">
-          <Logo />
-        </a>
-
-        <div className="hidden items-center gap-9 lg:flex">
-          {navLinks.map((link) => (
-            <a key={link.href} href={link.href} className="nav-link text-sm font-medium">
-              {link.label}
-            </a>
+    <header style={{ position: 'sticky', top: 0, zIndex: 50, borderBottom: '1px solid var(--line)', background: 'rgba(255,255,255,0.82)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}>
+      <div style={{ position: 'absolute', bottom: 0, left: 0, height: 2, width: `${prog * 100}%`, background: 'var(--grad-accent)', transition: 'width 0.1s linear' }} />
+      <nav className="dm-wrap" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 66 }}>
+        <a href="#" style={{ textDecoration: 'none' }}><Logo size={36} /></a>
+        <div style={{ display: 'flex', gap: 34 }} className="dm-navlinks">
+          {links.map(([l, href]) => (
+            <a key={l} href={href} className="nav-link" style={{ fontSize: '0.9rem', fontWeight: 500, textDecoration: 'none' }}>{l}</a>
           ))}
         </div>
-
-        <div className="flex items-center gap-2.5">
-          <a href="#pricing" className="hidden text-sm font-semibold text-slate-600 transition hover:text-slate-950 sm:inline-flex">
-            Sign in
-          </a>
-          <a href="#pricing" className="btn-primary hidden px-5 py-2.5 text-sm font-semibold sm:inline-flex">
-            Start free <ArrowRight size={16} />
-          </a>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <a href="#" className="dm-signin" style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--ink-soft)', textDecoration: 'none' }}>Sign in</a>
+          <Button variant="primary" size="sm" iconRight={<Icons.ArrowRight size={15} />} onClick={onCta}>Start free</Button>
           <button
+            aria-label="Toggle menu"
             onClick={() => setOpen((v) => !v)}
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-            className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-slate-950 lg:hidden"
+            style={{ display: 'none', placeItems: 'center', width: 40, height: 40, borderRadius: 12, border: '1px solid var(--line)', background: 'var(--surface)', cursor: 'pointer', color: 'var(--ink)' }}
+            className="dm-burger"
           >
-            {open ? <X size={18} /> : <Menu size={18} />}
+            {open ? <Icons.X size={18} /> : <Icons.Menu size={18} />}
           </button>
         </div>
       </nav>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.24 }}
-            className="overflow-hidden border-t border-slate-200/70 bg-white/95 backdrop-blur-xl lg:hidden"
-          >
-            <div className="space-y-1 px-4 py-4 sm:px-6">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="block rounded-xl px-4 py-3 text-base font-medium text-slate-700 transition hover:bg-slate-50"
-                >
-                  {link.label}
-                </a>
-              ))}
-              <a
-                href="#pricing"
-                onClick={() => setOpen(false)}
-                className="btn-primary mt-2 w-full px-5 py-3 text-sm font-semibold"
-              >
-                Start free <ArrowRight size={16} />
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
+      {open && (
+        <div className="dm-mobile-menu" style={{ borderTop: '1px solid var(--line)', background: 'var(--surface)' }}>
+          <div className="dm-wrap" style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: '14px 28px 20px' }}>
+            {links.map(([l, href]) => (
+              <a key={l} href={href} onClick={() => setOpen(false)} style={{ padding: '12px 4px', fontSize: '1rem', fontWeight: 600, color: 'var(--ink)', textDecoration: 'none', borderBottom: '1px solid var(--line)' }}>{l}</a>
+            ))}
+            <a href="#" style={{ padding: '12px 4px', fontSize: '1rem', fontWeight: 600, color: 'var(--ink-soft)', textDecoration: 'none' }}>Sign in</a>
+          </div>
+        </div>
+      )}
+    </header>
   );
 }

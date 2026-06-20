@@ -1,45 +1,42 @@
-import Logo from './Logo.jsx';
+import React from 'react';
+import { Logo } from './ui/Logo.jsx';
+import { Icons } from './ui/icons.jsx';
 
-const columns = [
-  ['Product', [['Features', '#features'], ['How it works', '#how-it-works'], ['Pricing', '#pricing'], ['FAQ', '#faq']]],
+const cols = [
+  ['Product', [['Features', '#features'], ['Product tour', '#product'], ['Pricing', '#pricing'], ['FAQ', '#faq']]],
   ['Company', [['About', '#'], ['Blog', '#'], ['Careers', '#'], ['Contact', '#']]],
-  ['Legal', [['Privacy', '#'], ['Terms', '#'], ['Cookies', '#']]],
+  ['Legal', [['Privacy', '#'], ['Terms', '#'], ['Cookies', '#'], ['Status', '#']]],
 ];
-
-const socials = ['X', 'LinkedIn', 'Instagram'];
 
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-200 bg-white px-4 pb-12 pt-14 sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
+    <footer style={{ borderTop: '1px solid var(--line)', background: 'var(--surface)', padding: '64px 0 36px' }}>
+      <div className="dm-wrap dm-footer-grid">
         <div>
-          <Logo />
-          <p className="mt-5 max-w-xs leading-7 text-slate-500">
+          <Logo size={38} />
+          <p style={{ margin: '20px 0 0', maxWidth: '20rem', lineHeight: 1.7, color: 'var(--ink-muted)' }}>
             Deadline planning, study focus, reminders, and progress tracking for modern students.
           </p>
+          <div style={{ display: 'flex', gap: 10, marginTop: 22 }}>
+            {[Icons.MessageSquare, Icons.Mail, Icons.Users].map((Icon, i) => (
+              <a key={i} href="#" aria-label="Social link" style={{ display: 'grid', placeItems: 'center', width: 40, height: 40, borderRadius: 12, border: '1px solid var(--line)', background: 'var(--surface)', color: 'var(--ink-soft)' }}>
+                <Icon size={17} />
+              </a>
+            ))}
+          </div>
         </div>
-        {columns.map(([title, links]) => (
-          <div key={title}>
-            <p className="text-sm font-bold text-slate-950">{title}</p>
-            <div className="mt-4 grid gap-3">
-              {links.map(([label, href]) => (
-                <a key={label} href={href} className="text-sm text-slate-500 transition hover:text-slate-950">
-                  {label}
-                </a>
-              ))}
+        {cols.map(([t, links]) => (
+          <div key={t}>
+            <p style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 600, color: 'var(--ink-faint)' }}>{t}</p>
+            <div style={{ marginTop: 18, display: 'flex', flexDirection: 'column', gap: 13 }}>
+              {links.map(([l, href]) => <a key={l} href={href} className="nav-link" style={{ fontSize: '0.9rem', textDecoration: 'none' }}>{l}</a>)}
             </div>
           </div>
         ))}
       </div>
-      <div className="mx-auto mt-12 flex max-w-6xl flex-col justify-between gap-4 border-t border-slate-200 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center">
-        <p>© 2026 DeadlineMate. All rights reserved.</p>
-        <div className="flex gap-5">
-          {socials.map((social) => (
-            <a key={social} href="#" className="transition hover:text-slate-950">
-              {social}
-            </a>
-          ))}
-        </div>
+      <div className="dm-wrap" style={{ marginTop: 48, paddingTop: 24, borderTop: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, fontSize: '0.82rem', color: 'var(--ink-muted)' }}>
+        <p style={{ margin: 0 }}>© 2026 DeadlineMate. All rights reserved.</p>
+        <p style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: '0.74rem', letterSpacing: '0.04em' }}>Made for students, by students.</p>
       </div>
     </footer>
   );

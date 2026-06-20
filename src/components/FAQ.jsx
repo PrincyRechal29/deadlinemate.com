@@ -1,59 +1,45 @@
-import { Plus } from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import React from 'react';
+import { Card } from './ui/Card.jsx';
+import { Button } from './ui/Button.jsx';
+import { Icons } from './ui/icons.jsx';
+import { Kicker } from './ui/layout.jsx';
 
 const faqs = [
-  ['Is DeadlineMate only for university students?', 'It is designed around university workflows, but any student managing modules, exams, and coursework can use it.'],
-  ['How is this different from a calendar?', 'Calendars store dates. DeadlineMate turns academic dates into priorities, study blocks, reminders, and progress.'],
-  ['Can I import deadlines from my university?', 'Yes. Paste your LMS calendar link (Canvas, Moodle, Blackboard, or Google Classroom) and your deadlines sync automatically.'],
-  ['Will it work on my phone?', 'Yes. DeadlineMate is mobile-first, so you can check your plan quickly between lectures.'],
+  ['Is DeadlineMate only for university students?', 'It is built around university workflows, but any student managing modules, exams, and coursework will feel at home.'],
+  ['How is this different from a calendar?', 'Calendars store dates. DeadlineMate turns academic dates into priorities, study blocks, reminders, and progress — it tells you what to do, not just when things are due.'],
+  ['Can I import deadlines from my university?', 'Yes. Paste your LMS calendar link (Canvas, Moodle, Blackboard, or Google Classroom) and your deadlines sync automatically — and stay in sync.'],
+  ['Will it work on my phone?', 'DeadlineMate is mobile-first, so you can check your plan in seconds between lectures, with push reminders on every device.'],
   ['What do I get for free?', 'Unlimited assignments, email reminders, and one calendar import — free forever, no credit card needed.'],
 ];
 
-export default function FAQ() {
-  const [open, setOpen] = useState(0);
-
+export default function FAQ({ onCta }) {
+  const [open, setOpen] = React.useState(0);
   return (
-    <section id="faq" className="px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-      <div className="mx-auto max-w-3xl">
-        <div className="text-center">
-          <p className="eyebrow">FAQ</p>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">
-            Questions, answered.
+    <section id="faq" style={{ padding: '80px 0', background: 'var(--page-tint)' }}>
+      <div className="dm-wrap dm-faq">
+        <div className="dm-faq-head">
+          <Kicker>FAQ</Kicker>
+          <h2 style={{ margin: '18px 0 0', fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem,4.4vw,2.8rem)', fontWeight: 700, letterSpacing: '-0.025em', color: 'var(--ink)', lineHeight: 1.1 }}>
+            Questions,<br /><span className="gradient-text">answered.</span>
           </h2>
+          <p style={{ margin: '16px 0 0', maxWidth: '22rem', fontSize: '0.98rem', lineHeight: 1.7, color: 'var(--ink-soft)' }}>
+            Still unsure? Reach out and a real student-support human will get back to you.
+          </p>
+          <div style={{ marginTop: 22 }}>
+            <Button variant="secondary" onClick={onCta} iconRight={<Icons.ArrowRight size={15} />}>Start free</Button>
+          </div>
         </div>
-        <div className="mt-12 space-y-3">
-          {faqs.map(([question, answer], index) => {
-            const isOpen = open === index;
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {faqs.map(([q, a], i) => {
+            const isOpen = open === i;
             return (
-              <div key={question} className="card p-1">
-                <button
-                  onClick={() => setOpen(isOpen ? -1 : index)}
-                  className="flex w-full items-center justify-between gap-6 px-5 py-4 text-left"
-                  aria-expanded={isOpen}
-                >
-                  <span className="text-base font-semibold text-slate-950">{question}</span>
-                  <motion.span
-                    animate={{ rotate: isOpen ? 45 : 0 }}
-                    className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-slate-100 text-slate-700"
-                  >
-                    <Plus size={17} />
-                  </motion.span>
+              <Card key={q} padding="none" style={{ overflow: 'hidden' }}>
+                <button onClick={() => setOpen(isOpen ? -1 : i)} aria-expanded={isOpen} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, padding: '20px 22px', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left' }}>
+                  <span style={{ fontSize: '1.02rem', fontWeight: 600, color: 'var(--ink)' }}>{q}</span>
+                  <span style={{ display: 'grid', placeItems: 'center', width: 32, height: 32, flexShrink: 0, borderRadius: '50%', background: isOpen ? 'var(--accent)' : 'var(--page-tint)', color: isOpen ? '#fff' : 'var(--ink-soft)', transform: isOpen ? 'rotate(45deg)' : 'none', transition: 'transform 0.24s var(--ease-out), background 0.24s var(--ease-out)' }}><Icons.Plus size={17} /></span>
                 </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.24 }}
-                      className="overflow-hidden"
-                    >
-                      <p className="px-5 pb-5 leading-7 text-slate-600">{answer}</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+                {isOpen && <p style={{ margin: 0, padding: '0 22px 22px', lineHeight: 1.7, color: 'var(--ink-soft)' }}>{a}</p>}
+              </Card>
             );
           })}
         </div>

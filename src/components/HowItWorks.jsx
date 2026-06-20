@@ -1,37 +1,32 @@
-import { motion } from 'framer-motion';
+import React from 'react';
+import { Icons } from './ui/icons.jsx';
+import { SectionHead } from './ui/layout.jsx';
 
 const steps = [
-  ['01', 'Add your deadlines', 'Type them in, or import your whole semester from Canvas, Moodle, or Google Classroom in one click.'],
-  ['02', 'See what matters today', 'DeadlineMate ranks everything by due date, workload, and importance — so you always know what to start.'],
-  ['03', 'Get reminded in time', 'Email and push alerts arrive a week, a day, and an hour before each deadline. Nothing slips.'],
-  ['04', 'Stay ahead all term', 'Track progress, build streaks, and watch your stress drop as the semester stays under control.'],
+  ['01', 'Add your deadlines', 'Type them in, or import a whole semester from Canvas, Moodle, or Google Classroom in one click.', Icons.Download],
+  ['02', 'See what matters today', 'DeadlineMate ranks everything by due date, workload, and weight — so you always know what to start.', Icons.TrendingUp],
+  ['03', 'Get reminded in time', 'Alerts arrive a week, a day, and an hour before each deadline. Nothing quietly slips past you.', Icons.Bell],
+  ['04', 'Stay ahead all term', 'Build streaks, track progress, and watch the stress drop as the semester stays under control.', Icons.Flame],
 ];
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-      <div className="mx-auto max-w-6xl">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow">How it works</p>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">
-            From deadline chaos to calm in four steps.
-          </h2>
-        </div>
-
-        <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {steps.map(([number, title, text], index) => (
-            <motion.article
-              key={title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ delay: index * 0.07 }}
-              className="card p-6"
-            >
-              <span className="display-font text-2xl font-bold gradient-text">{number}</span>
-              <h3 className="mt-4 text-lg font-bold text-slate-950">{title}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-500">{text}</p>
-            </motion.article>
+    <section id="how-it-works" style={{ padding: '80px 0', background: 'var(--page-tint)' }}>
+      <div className="dm-wrap">
+        <SectionHead kicker="How it works" title="From deadline chaos to" accent="calm, in four steps." />
+        <div className="dm-steps" style={{ marginTop: 48 }}>
+          {steps.map(([n, t, d, Icon], idx) => (
+            <div key={n} style={{ position: 'relative' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
+                <span style={{ display: 'grid', placeItems: 'center', width: 46, height: 46, borderRadius: 14, background: 'var(--surface)', border: '1px solid var(--line)', color: 'var(--accent)', boxShadow: 'var(--shadow-sm)', flexShrink: 0 }}>
+                  <Icon size={20} />
+                </span>
+                <span aria-hidden style={{ flex: 1, height: 2, borderRadius: 2, background: idx === steps.length - 1 ? 'transparent' : 'repeating-linear-gradient(90deg, var(--line-strong) 0 6px, transparent 6px 12px)' }} />
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 700, color: 'var(--ink-faint)' }}>{n}</span>
+              </div>
+              <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: 'var(--ink)' }}>{t}</h3>
+              <p style={{ margin: '10px 0 0', fontSize: '0.9rem', lineHeight: 1.65, color: 'var(--ink-muted)' }}>{d}</p>
+            </div>
           ))}
         </div>
       </div>

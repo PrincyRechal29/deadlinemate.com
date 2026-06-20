@@ -1,50 +1,51 @@
-import { Star } from 'lucide-react';
-import { motion } from 'framer-motion';
+import React from 'react';
+import { Card } from './ui/Card.jsx';
+import { Icons } from './ui/icons.jsx';
+import { SectionHead } from './ui/layout.jsx';
 
-const testimonials = [
-  ['DeadlineMate saved my semester.', 'I finally knew what mattered each day instead of opening five different apps and guessing.', 'Aisha', 'Psychology student', 'A'],
-  ['It made deadlines feel manageable.', 'The urgency view and study blocks helped me work earlier instead of rushing at midnight.', 'Daniel', 'Engineering student', 'D'],
-  ['This feels built for university life.', 'Structured enough for modules and exams, but still clean enough to use every morning.', 'Maya', 'Business student', 'M'],
-];
+const Avatar = ({ a, dark }) => (
+  <span style={{ display: 'grid', placeItems: 'center', width: 44, height: 44, borderRadius: '50%', background: dark ? 'rgba(255,255,255,0.14)' : 'var(--grad-accent)', color: '#fff', fontWeight: 700, flexShrink: 0 }}>{a}</span>
+);
+const Stars = () => (
+  <div style={{ display: 'flex', gap: 2 }}>{Array.from({ length: 5 }).map((_, i) => <Icons.Star key={i} size={15} color="var(--urg-medium)" style={{ fill: 'var(--urg-medium)' }} />)}</div>
+);
 
 export default function Testimonials() {
+  const side = [
+    ['It made deadlines feel manageable.', 'The urgency view and study blocks helped me work earlier instead of rushing at midnight.', 'Daniel', 'Engineering, 2nd year', 'D'],
+    ['Built for actual university life.', 'Structured enough for modules and exams, but clean enough to open every single morning.', 'Maya', 'Business, final year', 'M'],
+  ];
   return (
-    <section className="px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-      <div className="mx-auto max-w-6xl">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow">Loved by students</p>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">
-            A calmer semester starts with a better system.
-          </h2>
-        </div>
-        <div className="mt-14 grid gap-4 lg:grid-cols-3">
-          {testimonials.map(([quote, body, name, role, avatar], index) => (
-            <motion.article
-              key={name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ delay: index * 0.07 }}
-              className="card card-hover flex flex-col p-7"
-            >
-              <div className="flex gap-0.5 text-amber-400">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} size={16} fill="currentColor" />
-                ))}
-              </div>
-              <p className="mt-4 text-lg font-bold text-slate-950">"{quote}"</p>
-              <p className="mt-3 flex-1 leading-7 text-slate-600">{body}</p>
-              <div className="mt-6 flex items-center gap-3">
-                <div className="grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-indigo-600 to-violet-500 text-sm font-bold text-white">
-                  {avatar}
+    <section style={{ padding: '80px 0' }}>
+      <div className="dm-wrap">
+        <SectionHead kicker="Loved by students" title="A calmer semester starts with a" accent="better system." />
+        <div className="dm-split" style={{ marginTop: 44, alignItems: 'stretch' }}>
+          <Card dark padding="xl" style={{ display: 'flex', flexDirection: 'column' }}>
+            <Stars />
+            <p style={{ margin: '20px 0 0', fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem,2.6vw,2rem)', fontWeight: 700, lineHeight: 1.25, letterSpacing: '-0.02em', color: '#fff' }}>
+              &ldquo;DeadlineMate genuinely saved my semester. I finally knew what mattered each day instead of opening five apps and guessing.&rdquo;
+            </p>
+            <p style={{ margin: '18px 0 0', fontSize: '1rem', lineHeight: 1.7, color: 'rgba(255,255,255,0.7)', flex: 1 }}>
+              I went from missing two or three deadlines a term to handing everything in early. The reminders alone are worth it.
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 28 }}>
+              <Avatar a="A" dark />
+              <div><p style={{ margin: 0, fontWeight: 700, color: '#fff' }}>Aisha R.</p><p style={{ margin: '2px 0 0', fontSize: '0.85rem', color: 'rgba(255,255,255,0.55)' }}>Psychology, 3rd year · University of Leeds</p></div>
+            </div>
+          </Card>
+          <div style={{ display: 'grid', gap: 18 }}>
+            {side.map(([q, b, n, r, a]) => (
+              <Card key={n} hover padding="lg" style={{ display: 'flex', flexDirection: 'column' }}>
+                <Stars />
+                <p style={{ margin: '14px 0 0', fontSize: '1.1rem', fontWeight: 700, color: 'var(--ink)' }}>{q}</p>
+                <p style={{ margin: '10px 0 0', flex: 1, fontSize: '0.92rem', lineHeight: 1.6, color: 'var(--ink-soft)' }}>{b}</p>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 20 }}>
+                  <Avatar a={a} />
+                  <div><p style={{ margin: 0, fontWeight: 700, color: 'var(--ink)' }}>{n}</p><p style={{ margin: '2px 0 0', fontSize: '0.83rem', color: 'var(--ink-muted)' }}>{r}</p></div>
                 </div>
-                <div>
-                  <p className="font-bold text-slate-950">{name}</p>
-                  <p className="text-sm text-slate-500">{role}</p>
-                </div>
-              </div>
-            </motion.article>
-          ))}
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </section>

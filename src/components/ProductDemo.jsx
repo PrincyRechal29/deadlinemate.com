@@ -1,129 +1,82 @@
-import { Bell, BookOpenCheck, CalendarClock, CheckCircle2, LayoutDashboard, LineChart, Settings } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-
-const nav = [
-  ['Dashboard', LayoutDashboard],
-  ['Planner', CalendarClock],
-  ['Modules', BookOpenCheck],
-  ['Analytics', LineChart],
-  ['Settings', Settings],
-];
-
-const plannerSets = [
-  [45, 55, 65, 75, 85],
-  [62, 42, 78, 56, 92],
-  [38, 70, 52, 88, 64],
-];
-
-const alerts = [
-  'Research essay needs two focus sessions before Friday.',
-  'Statistics quiz moved up — a revision block was added today.',
-  'Group presentation is high priority for tomorrow.',
-];
-
-const highlights = [
-  'Deadline urgency scoring for the week ahead',
-  'Focus blocks generated from due dates and exam pressure',
-  'Planner, analytics, and reminders in one clean view',
-];
+import React from 'react';
+import { Logo } from './ui/Logo.jsx';
+import { Icons } from './ui/icons.jsx';
+import { Kicker } from './ui/layout.jsx';
 
 export default function ProductDemo() {
-  const [liveIndex, setLiveIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setLiveIndex((current) => (current + 1) % plannerSets.length);
-    }, 4200);
-    return () => window.clearInterval(timer);
-  }, []);
-
+  const sets = [[45, 55, 68, 78, 88], [62, 42, 78, 56, 92], [38, 72, 52, 90, 64]];
+  const alerts = [
+    'Research essay needs two focus sessions before Friday.',
+    'Statistics quiz moved up — a revision block was added today.',
+    'Group presentation is high priority for tomorrow morning.',
+  ];
+  const [i, setI] = React.useState(0);
+  React.useEffect(() => { const t = setInterval(() => setI((v) => (v + 1) % sets.length), 4200); return () => clearInterval(t); }, []);
+  const nav = [['Dashboard', Icons.LayoutDashboard], ['Planner', Icons.CalendarClock], ['Modules', Icons.BookOpen], ['Analytics', Icons.BarChart], ['Settings', Icons.Settings]];
+  const points = [
+    ['Urgency scoring', 'Each deadline is ranked by due date, workload, and weight.'],
+    ['Auto-built focus blocks', 'Study time is scheduled from real exam and deadline pressure.'],
+    ['One calm view', 'Planner, analytics, and reminders live in a single place.'],
+  ];
   return (
-    <section id="product-demo" className="px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-      <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-        <motion.div
-          initial={{ opacity: 0, x: -28 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          className="card overflow-hidden p-2 shadow-[var(--shadow-lg)]"
-        >
-          <div className="grid overflow-hidden rounded-[1rem] border border-slate-100 bg-white lg:grid-cols-[180px_1fr]">
-            <aside className="hidden border-r border-slate-100 bg-slate-50/60 p-4 lg:block">
-              <div className="rounded-xl bg-white p-3 shadow-[var(--shadow-sm)]">
-                <p className="text-sm font-bold text-slate-900">DeadlineMate</p>
-                <p className="mt-0.5 text-[11px] text-slate-500">Student workspace</p>
+    <section id="product" style={{ position: 'relative', padding: '92px 0', background: 'var(--ink)', color: '#fff', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(46rem 24rem at 84% 0%, rgba(99,102,241,0.32), transparent 58%), radial-gradient(40rem 22rem at 0% 100%, rgba(0,184,217,0.2), transparent 55%)' }} />
+      <div className="grid-bg-dark" style={{ position: 'absolute', inset: 0 }} />
+      <div className="dm-wrap dm-split" style={{ position: 'relative' }}>
+        <div>
+          <Kicker onDark>Product tour</Kicker>
+          <h2 style={{ margin: '18px 0 0', fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem,4.4vw,3rem)', fontWeight: 700, letterSpacing: '-0.025em', lineHeight: 1.08 }}>
+            Your semester, finally <span className="brand-text">under control.</span>
+          </h2>
+          <p style={{ margin: '18px 0 0', maxWidth: '32rem', fontSize: '1.08rem', lineHeight: 1.7, color: 'rgba(255,255,255,0.72)' }}>
+            Open DeadlineMate and see exactly what to work on — a live planner that reshapes itself as deadlines and exams approach.
+          </p>
+          <div style={{ marginTop: 30, display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {points.map(([t, d]) => (
+              <div key={t} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+                <span style={{ display: 'grid', placeItems: 'center', width: 30, height: 30, borderRadius: 9, background: 'rgba(255,255,255,0.08)', color: 'var(--brand-lime)', flexShrink: 0 }}><Icons.Check size={16} /></span>
+                <div><p style={{ margin: 0, fontWeight: 700, fontSize: '0.98rem' }}>{t}</p><p style={{ margin: '3px 0 0', fontSize: '0.88rem', lineHeight: 1.55, color: 'rgba(255,255,255,0.6)' }}>{d}</p></div>
               </div>
-              <div className="mt-5 space-y-1">
-                {nav.map(([label, Icon], index) => (
-                  <div
-                    key={label}
-                    className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium ${
-                      index === 0 ? 'bg-indigo-600 text-white' : 'text-slate-500'
-                    }`}
-                  >
-                    <Icon size={16} />
-                    {label}
+            ))}
+          </div>
+        </div>
+
+        <div style={{ position: 'relative', borderRadius: 'var(--radius-2xl)', padding: 10, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: 'var(--shadow-lg)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '168px 1fr', borderRadius: 18, overflow: 'hidden', border: '1px solid var(--line)', background: 'var(--surface)', color: 'var(--ink)' }} className="dm-demo-inner">
+            <aside style={{ borderRight: '1px solid var(--line)', background: 'rgba(248,250,252,0.7)', padding: 14 }} className="dm-demo-aside">
+              <Logo size={26} subtitle="" />
+              <div style={{ marginTop: 18, display: 'flex', flexDirection: 'column', gap: 3 }}>
+                {nav.map(([l, Icon], idx) => (
+                  <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 11, padding: '9px 11px', borderRadius: 11, fontSize: '0.84rem', fontWeight: 600, color: idx === 0 ? '#fff' : 'var(--ink-muted)', background: idx === 0 ? 'var(--accent)' : 'transparent' }}>
+                    <Icon size={16} /> {l}
                   </div>
                 ))}
               </div>
             </aside>
-
-            <div className="space-y-4 p-5">
-              <div className="rounded-2xl border border-slate-100 bg-white p-4">
-                <div className="flex items-center justify-between">
-                  <p className="text-base font-bold text-slate-900">Weekly planner</p>
-                  <span className="text-xs text-slate-400">Focus load</span>
+            <div style={{ padding: 18, display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div style={{ padding: 16, borderRadius: 16, border: '1px solid var(--line)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <p style={{ margin: 0, fontWeight: 700, color: 'var(--ink)' }}>Weekly planner</p>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', letterSpacing: '0.1em', color: 'var(--ink-faint)' }}>FOCUS LOAD</span>
                 </div>
-                <div className="mt-5 grid grid-cols-5 gap-2.5">
-                  {['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].map((day, index) => (
-                    <div key={day} className="flex flex-col items-center gap-2">
-                      <div className="flex h-24 w-full items-end rounded-lg bg-slate-50 p-1.5">
-                        <motion.div
-                          initial={{ height: 0 }}
-                          animate={{ height: `${plannerSets[liveIndex][index]}%` }}
-                          transition={{ duration: 0.7, delay: index * 0.06 }}
-                          className="w-full rounded-md bg-gradient-to-t from-indigo-600 to-violet-400"
-                        />
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 10, marginTop: 18 }}>
+                  {['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].map((day, idx) => (
+                    <div key={day} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                      <div style={{ height: 100, width: '100%', display: 'flex', alignItems: 'flex-end', borderRadius: 9, background: 'var(--page)', padding: 5 }}>
+                        <div style={{ width: '100%', height: `${sets[i][idx]}%`, borderRadius: 7, background: 'linear-gradient(to top,var(--accent),var(--accent-2))', transition: 'height 0.7s var(--ease-out)' }} />
                       </div>
-                      <p className="text-[11px] font-medium text-slate-400">{day}</p>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.66rem', fontWeight: 500, color: 'var(--ink-faint)' }}>{day}</span>
                     </div>
                   ))}
                 </div>
               </div>
-
-              <div className="flex items-start gap-3 rounded-2xl border border-rose-100 bg-rose-50 p-4">
-                <Bell className="mt-0.5 shrink-0 text-rose-500" size={18} />
-                <div>
-                  <p className="text-sm font-bold text-rose-900">Urgency alert</p>
-                  <p className="mt-1 text-sm leading-6 text-rose-700">{alerts[liveIndex]}</p>
-                </div>
+              <div style={{ display: 'flex', gap: 12, padding: 16, borderRadius: 16, border: '1px solid var(--urg-critical)', background: 'var(--urg-critical-soft)' }}>
+                <Icons.Bell size={18} color="var(--urg-critical)" style={{ flexShrink: 0, marginTop: 2 }} />
+                <div><p style={{ margin: 0, fontSize: '0.86rem', fontWeight: 700, color: '#be123c' }}>Urgency alert</p><p style={{ margin: '5px 0 0', fontSize: '0.84rem', lineHeight: 1.6, color: '#9f1239' }}>{alerts[i]}</p></div>
               </div>
             </div>
           </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 28 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-        >
-          <p className="eyebrow">Product tour</p>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">
-            Your semester, finally under control.
-          </h2>
-          <p className="mt-5 text-lg leading-8 text-slate-600">
-            Plan deadlines, exams, modules, and focus sessions in one calm dashboard built for modern
-            university life.
-          </p>
-          <div className="mt-8 space-y-3">
-            {highlights.map((text) => (
-              <div key={text} className="card flex items-center gap-3 p-4">
-                <CheckCircle2 className="shrink-0 text-emerald-500" size={20} />
-                <span className="text-sm font-medium text-slate-800">{text}</span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
