@@ -50,7 +50,7 @@ export default function Hero({ onCta }) {
       <Halo top="14rem" />
       <div className="dm-wrap" style={{ position: 'relative', textAlign: 'center' }}>
         <div className="dm-rise">
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 9, padding: '7px 15px', borderRadius: 'var(--radius-pill)', background: 'var(--accent-soft)', border: '1px solid rgba(10, 156, 186, 0.22)', fontSize: '0.82rem', fontWeight: 500, color: 'var(--ink-soft)' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 9, padding: '7px 15px', borderRadius: 'var(--radius-pill)', background: 'var(--accent-soft)', border: '1px solid rgba(166, 124, 31, 0.32)', fontSize: '0.82rem', fontWeight: 500, color: 'var(--ink-soft)' }}>
             <span className="dm-pulse" style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--accent)', flexShrink: 0 }} />
             Next deadline in
             <span className="mono" style={{ fontWeight: 550, color: 'var(--ink)' }}>{countdown}</span>
