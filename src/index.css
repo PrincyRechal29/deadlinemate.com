@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Geist:wght@300..800&family=Geist+Mono:wght@400..600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400..600&display=swap");
 @import "tailwindcss";
 
 /* ============================================================================
@@ -11,29 +11,29 @@
    ============================================================================ */
 
 :root {
-  /* ---- Canvas — warm ivory (luxury) -------------------------------------- */
-  --page: #fdfbf6;          /* warm ivory white */
-  --page-2: #f5f0e6;        /* soft champagne band */
-  --panel: #fffdf9;          /* card surface */
-  --panel-2: rgba(43, 36, 25, 0.05);  /* raised tinted surface */
-  --panel-solid: #fffdf9;   /* opaque elevated surface (mocks, toasts) */
+  /* ---- Canvas ------------------------------------------------------------ */
+  --page: #ffffff;
+  --page-2: #f5f7f9;        /* lifted section band */
+  --panel: #ffffff;          /* card surface */
+  --panel-2: rgba(9, 15, 20, 0.05);  /* raised tinted surface */
+  --panel-solid: #ffffff;   /* opaque elevated surface (mocks, toasts) */
 
-  /* ---- Text — warm espresso ink (luxury, not stark black) ----------------- */
-  --ink: #2b2419;
-  --ink-soft: #4f4636;
-  --ink-muted: #7a7060;
-  --ink-faint: #a9a091;
+  /* ---- Text — soft matte charcoal (not stark black) ----------------------- */
+  --ink: #4b4f59;
+  --ink-soft: #45484d;
+  --ink-muted: #6d7177;
+  --ink-faint: #9a9ea5;
 
-  /* ---- Lines — warm hairlines --------------------------------------------- */
-  --line: rgba(43, 36, 25, 0.12);
-  --line-soft: rgba(43, 36, 25, 0.07);
-  --line-strong: rgba(43, 36, 25, 0.22);
+  /* ---- Lines (black alpha hairlines) -------------------------------------- */
+  --line: rgba(9, 15, 20, 0.12);
+  --line-soft: rgba(9, 15, 20, 0.06);
+  --line-strong: rgba(9, 15, 20, 0.26);
 
-  /* ---- Brand — champagne gold, used with restraint ------------------------ */
-  --accent: #a67c1f;         /* deep champagne gold (readable on ivory) */
-  --accent-deep: #855f14;
-  --accent-soft: rgba(166, 124, 31, 0.1);
-  --accent-glow: rgba(201, 162, 74, 0.25);
+  /* ---- Brand — one cyan, used sparingly ----------------------------------- */
+  --accent: #0a9cba;
+  --accent-deep: #077e97;
+  --accent-soft: rgba(10, 156, 186, 0.09);
+  --accent-glow: rgba(64, 196, 228, 0.22);
 
   /* ---- Urgency (tuned for light) -------------------------------------------- */
   --urg-critical: #e5484d;
@@ -55,20 +55,20 @@
   --tone-high-text: #9a6c00;
   --tone-medium-text: #5f6169;
   --tone-success-text: #1e7a4e;
-  --btn-primary-text: #fdfbf6;
-  --btn-primary-hover: #3d3427;
+  --btn-primary-text: #ffffff;
+  --btn-primary-hover: #26272b;
 
-  /* ---- Type — Fraunces serif display + Geist sans body -------------------- */
-  --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+  /* ---- Type ----------------------------------------------------------------- */
+  --font-display: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-body: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* ---- Radii (playful, per Once UI) ------------------------------------------- */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-2xl: 28px;
+  /* ---- Radii (sharpened for a crisp, premium edge) --------------------------- */
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 13px;
+  --radius-2xl: 16px;
   --radius-pill: 999px;
 
   /* ---- Shadows (barely there) ---------------------------------------------------- */
@@ -113,8 +113,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 h1, h2, h3, h4, .display-font {
   font-family: var(--font-display);
-  font-optical-sizing: auto;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.03em;
 }
 
 /* ---- Cyan aura — the Magic Portfolio light-theme signature ------------------- */
@@ -124,8 +123,8 @@ h1, h2, h3, h4, .display-font {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 60% 44% at 50% 0%, rgba(214, 178, 92, 0.3), transparent 70%),
-    radial-gradient(ellipse 88% 60% at 50% 16%, rgba(201, 162, 74, 0.14), transparent 72%);
+    radial-gradient(ellipse 62% 46% at 50% 2%, rgba(173, 231, 246, 0.55), transparent 70%),
+    radial-gradient(ellipse 85% 62% at 50% 18%, rgba(125, 214, 238, 0.3), transparent 72%);
   transform-origin: 50% 0%;
   animation: dmaura 16s var(--ease-soft) infinite;
 }
@@ -139,22 +138,22 @@ h1, h2, h3, h4, .display-font {
    used for the product mocks, the featured plan, the closing CTA, and the
    footer. Everything that consumes tokens inverts automatically. */
 .dm-invert {
-  --page: #14110a;
-  --page-2: #1e1a11;
-  --panel: #201b12;
-  --panel-2: rgba(255, 255, 255, 0.06);
-  --panel-solid: #171308;
-  --ink: #f5efe1;
-  --ink-soft: #d8cfbd;
-  --ink-muted: #a89e88;
-  --ink-faint: #7a7160;
-  --line: rgba(214, 178, 92, 0.16);
-  --line-soft: rgba(214, 178, 92, 0.09);
-  --line-strong: rgba(214, 178, 92, 0.3);
-  --accent: #d6b25c;
-  --accent-deep: #e3c576;
-  --accent-soft: rgba(214, 178, 92, 0.12);
-  --accent-glow: rgba(214, 178, 92, 0.16);
+  --page: #0b0c0e;
+  --page-2: #14161b;
+  --panel: #16181d;
+  --panel-2: rgba(255, 255, 255, 0.07);
+  --panel-solid: #101216;
+  --ink: #f2f4f8;
+  --ink-soft: #c6cad2;
+  --ink-muted: #9096a0;
+  --ink-faint: #6b717c;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-soft: rgba(255, 255, 255, 0.05);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --accent: #35c6de;
+  --accent-deep: #5ed4e8;
+  --accent-soft: rgba(53, 198, 222, 0.1);
+  --accent-glow: rgba(53, 198, 222, 0.14);
   --urg-critical: #ff6369;
   --urg-high: #ffc53d;
   --urg-medium: #9096a0;
@@ -167,8 +166,8 @@ h1, h2, h3, h4, .display-font {
   --tone-high-text: #ffd166;
   --tone-medium-text: #a5aab4;
   --tone-success-text: #4fe09c;
-  --btn-primary-text: #17130a;
-  --btn-primary-hover: #ede3cb;
+  --btn-primary-text: #0b0c0e;
+  --btn-primary-hover: #d5d9e0;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 12px 32px -16px rgba(0, 0, 0, 0.55);
   --shadow-lg: 0 40px 80px -40px rgba(0, 0, 0, 0.7), 0 12px 32px -20px rgba(0, 0, 0, 0.5);
@@ -184,10 +183,9 @@ h1, h2, h3, h4, .display-font {
 /* ---- Eyebrow ------------------------------------------------------------------- */
 .dm-kicker {
   display: inline-block;
-  font-family: var(--font-body);
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   font-weight: 700;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--accent);
 }
