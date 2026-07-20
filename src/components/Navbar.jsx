@@ -14,7 +14,7 @@ export default function Navbar({ onCta }) {
   return (
     <header style={{ position: 'sticky', top: 0, zIndex: 50, padding: '14px 0' }}>
       <div className="dm-wrap">
-        <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 58, padding: '0 10px 0 18px', borderRadius: 'var(--radius-pill)', border: '1px solid var(--line)', background: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: '0 8px 24px -16px rgba(10,10,11,0.18)' }}>
+        <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 60, padding: '0 12px 0 20px', borderRadius: 'var(--radius-xl)', border: '1px solid var(--line)', background: 'rgba(255,255,255,0.78)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: '0 10px 30px -18px rgba(10,10,11,0.22)' }}>
           <a href="#" style={{ textDecoration: 'none' }}><Logo size={30} /></a>
           <div style={{ display: 'flex', gap: 30 }} className="dm-navlinks">
             {links.map(([l, href]) => (

@@ -28,7 +28,7 @@ export function Button({
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
     gap: s.gap, height: s.height, padding: s.padding, width: full ? '100%' : 'auto',
     fontFamily: 'var(--font-body)', fontWeight: 550, fontSize: s.fontSize, lineHeight: 1,
-    borderRadius: 'var(--radius-pill)', cursor: disabled ? 'not-allowed' : 'pointer',
+    borderRadius: 'var(--radius-lg)', cursor: disabled ? 'not-allowed' : 'pointer',
     border: '1px solid transparent',
     transition: 'transform 0.28s var(--ease-bounce), background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
     opacity: disabled ? 0.5 : 1, textDecoration: 'none', whiteSpace: 'nowrap',
