@@ -18,8 +18,8 @@
   --panel-2: rgba(9, 15, 20, 0.05);  /* raised tinted surface */
   --panel-solid: #ffffff;   /* opaque elevated surface (mocks, toasts) */
 
-  /* ---- Text -------------------------------------------------------------- */
-  --ink: #0a0c0e;
+  /* ---- Text — matte off-black (softer than pure black) -------------------- */
+  --ink: #222228;
   --ink-soft: #45484d;
   --ink-muted: #6d7177;
   --ink-faint: #9a9ea5;
