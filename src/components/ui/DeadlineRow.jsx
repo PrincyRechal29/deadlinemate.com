@@ -8,80 +8,31 @@ const URG = {
 };
 
 /**
- * The signature product row: a single deadline. Urgency dot + title + course
- * meta on the left, due label on the right. Checking it off strikes through.
- * This is what a student scans every morning.
+ * The signature product row: one deadline. A small urgency dot, the title,
+ * quiet meta, and a trailing slot — nothing else.
  */
-export function DeadlineRow({
-  title,
-  course = '',
-  due = '',
-  urgency = 'medium',
-  done = false,
-  onToggle,
-  trailing = null,
-  ...rest
-}) {
+export function DeadlineRow({ title, course = '', due = '', urgency = 'medium', trailing = null, ...rest }) {
   const [hover, setHover] = React.useState(false);
+  const c = URG[urgency] || URG.medium;
   return (
     <div
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '0.75rem',
-        padding: '0.7rem 0.85rem',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem',
+        padding: '0.75rem 0.9rem',
         borderRadius: 'var(--radius-md)',
-        background: hover ? 'var(--page-tint)' : 'var(--page)',
+        background: hover ? 'var(--panel-2)' : 'var(--panel)',
+        border: '1px solid var(--line)',
         transition: 'background var(--dur-fast) var(--ease-out)',
       }}
       {...rest}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', minWidth: 0 }}>
-        <button
-          onClick={onToggle}
-          aria-label={done ? 'Mark not done' : 'Mark done'}
-          style={{
-            width: 20,
-            height: 20,
-            flexShrink: 0,
-            borderRadius: '50%',
-            cursor: 'pointer',
-            border: done ? 'none' : `2px solid ${URG[urgency] || URG.medium}`,
-            background: done ? 'var(--success)' : 'transparent',
-            display: 'grid',
-            placeItems: 'center',
-            padding: 0,
-          }}
-        >
-          {done && (
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
-          )}
-        </button>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', minWidth: 0 }}>
+        <span style={{ width: 7, height: 7, borderRadius: '50%', background: c, flexShrink: 0 }} />
         <div style={{ minWidth: 0 }}>
-          <p
-            style={{
-              margin: 0,
-              fontSize: '0.9rem',
-              fontWeight: 600,
-              color: done ? 'var(--ink-faint)' : 'var(--ink)',
-              textDecoration: done ? 'line-through' : 'none',
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
-            {title}
-          </p>
-          {(course || due) && (
-            <p style={{ margin: '0.15rem 0 0', fontSize: '0.72rem', color: 'var(--ink-muted)' }}>
-              {[course, due].filter(Boolean).join(' · ')}
-            </p>
-          )}
+          <p style={{ margin: 0, fontSize: '0.88rem', fontWeight: 550, color: 'var(--ink)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</p>
+          {(course || due) && <p style={{ margin: '0.14rem 0 0', fontSize: '0.74rem', color: 'var(--ink-muted)' }}>{[course, due].filter(Boolean).join(' · ')}</p>}
         </div>
       </div>
       {trailing}

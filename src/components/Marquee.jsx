@@ -1,27 +1,33 @@
 import React from 'react';
 
 const schools = [
-  'University of Manchester', 'King’s College London', 'University of Leeds', 'UCL', 'University of Bristol',
-  'University of Edinburgh', 'University of Warwick', 'Durham University', 'University of Birmingham', 'University of Glasgow',
+  'Manchester', 'King’s College London', 'Leeds', 'UCL', 'Bristol',
+  'Edinburgh', 'Warwick', 'Durham', 'Birmingham', 'Glasgow',
 ];
 
+/**
+ * Trust row as an infinite marquee — two identical halves slide by -50% on a
+ * linear loop; pauses on hover; the global reduced-motion rule freezes it.
+ */
 export default function Marquee() {
-  const row = [...schools, ...schools];
+  const half = (key) => (
+    <div key={key} aria-hidden={key === 'b'} style={{ display: 'flex', flexShrink: 0 }}>
+      {schools.map((s) => (
+        <span key={s} style={{ padding: '0 26px', fontSize: '0.95rem', fontWeight: 550, letterSpacing: '-0.01em', color: 'var(--ink-faint)', whiteSpace: 'nowrap' }}>{s}</span>
+      ))}
+    </div>
+  );
   return (
-    <section style={{ padding: '10px 0 44px' }}>
-      <div className="dm-wrap">
-        <p style={{ textAlign: 'center', margin: '0 0 22px', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-faint)' }}>
-          Keeping students on track at
+    <section style={{ padding: '0 0 96px' }}>
+      <div className="dm-wrap" style={{ textAlign: 'center' }}>
+        <p style={{ margin: '0 0 22px', fontSize: '0.82rem', fontWeight: 500, color: 'var(--ink-faint)' }}>
+          Keeping students on track at 40+ universities
         </p>
       </div>
       <div className="dm-marquee">
         <div className="dm-marquee-track">
-          {row.map((s, i) => (
-            <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 12, whiteSpace: 'nowrap', fontFamily: 'var(--font-display)', fontSize: '1.05rem', fontWeight: 600, color: 'var(--ink-faint)' }}>
-              {s}
-              <span aria-hidden style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--line-strong)' }} />
-            </span>
-          ))}
+          {half('a')}
+          {half('b')}
         </div>
       </div>
     </section>

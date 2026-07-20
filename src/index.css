@@ -1,121 +1,87 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400..600&display=swap");
 @import "tailwindcss";
 
 /* ============================================================================
-   DeadlineMate Design System — tokens + base + layout system
-   Ported & extended from the Claude Design handoff. One functional accent
-   (indigo -> violet) over a calm base, a vivid brand spectrum, and a 4-step
-   urgency scale that powers every deadline. Full-bleed, bento, editorial.
+   DeadlineMate — "Magic Light" design system (Once UI / Magic Portfolio,
+   light theme) with Duolingo-inspired motion. White canvas washed by a soft
+   cyan aura, gray neutrals, near-black ink, one cyan brand accent, Geist
+   type, hairline borders, floating pill nav, dark inverted accents — plus
+   playful animation: floating hero satellites, springy pop-ins, an animated
+   progress bar, and buttons that press down.
    ============================================================================ */
 
 :root {
-  /* ---- Ink / text ------------------------------------------------------- */
-  --ink: #0b1220;
-  --ink-soft: #475569;
-  --ink-muted: #64748b;
-  --ink-faint: #94a3b8;
+  /* ---- Canvas ------------------------------------------------------------ */
+  --page: #ffffff;
+  --page-2: #f5f7f9;        /* lifted section band */
+  --panel: #ffffff;          /* card surface */
+  --panel-2: rgba(9, 15, 20, 0.05);  /* raised tinted surface */
+  --panel-solid: #ffffff;   /* opaque elevated surface (mocks, toasts) */
 
-  /* ---- Surfaces --------------------------------------------------------- */
-  --surface: #ffffff;
-  --surface-2: #fcfcff;
-  --page: #f6f7fb;
-  --page-tint: #eef0f8;
+  /* ---- Text — matte off-black (softer than pure black) -------------------- */
+  --ink: #222228;
+  --ink-soft: #45484d;
+  --ink-muted: #6d7177;
+  --ink-faint: #9a9ea5;
 
-  /* ---- Lines ------------------------------------------------------------ */
-  --line: rgba(15, 23, 42, 0.08);
-  --line-strong: rgba(15, 23, 42, 0.12);
+  /* ---- Lines (black alpha hairlines) -------------------------------------- */
+  --line: rgba(9, 15, 20, 0.09);
+  --line-soft: rgba(9, 15, 20, 0.05);
+  --line-strong: rgba(9, 15, 20, 0.18);
 
-  /* ---- Functional accent (indigo -> violet) ----------------------------- */
-  --accent: #4f46e5;
-  --accent-strong: #4338ca;
-  --accent-2: #7c3aed;
-  --accent-soft: rgba(79, 70, 229, 0.1);
-  --accent-softer: rgba(79, 70, 229, 0.06);
+  /* ---- Brand — one cyan, used sparingly ----------------------------------- */
+  --accent: #0a9cba;
+  --accent-deep: #077e97;
+  --accent-soft: rgba(10, 156, 186, 0.09);
+  --accent-glow: rgba(64, 196, 228, 0.22);
 
-  /* ---- Brand spectrum (from the DeadlineMate mark) ---------------------- */
-  --brand-blue: #284cff;
-  --brand-cyan: #00b8d9;
-  --brand-lime: #b5f05a;
-  --ink-deep: #07111f;
+  /* ---- Urgency (tuned for light) -------------------------------------------- */
+  --urg-critical: #e5484d;
+  --urg-high: #dc9a00;
+  --urg-medium: #8b8d98;
+  --urg-low: #30a46c;
 
-  /* ---- Urgency scale (the heart of the product) ------------------------- */
-  --urg-critical: #f43f5e;
-  --urg-high: #f97316;
-  --urg-medium: #f59e0b;
-  --urg-low: #10b981;
+  --urg-critical-soft: rgba(229, 72, 77, 0.09);
+  --urg-high-soft: rgba(220, 154, 0, 0.1);
+  --urg-medium-soft: rgba(139, 141, 152, 0.1);
+  --urg-low-soft: rgba(48, 164, 108, 0.1);
 
-  --urg-critical-soft: #fff1f2;
-  --urg-high-soft: #fff7ed;
-  --urg-medium-soft: #fffbeb;
-  --urg-low-soft: #ecfdf5;
+  /* ---- Semantic ------------------------------------------------------------ */
+  --success: #30a46c;
+  --danger: #e5484d;
 
-  /* ---- Semantic state --------------------------------------------------- */
-  --success: #10b981;
-  --success-soft: #ecfdf5;
-  --warning: #f59e0b;
-  --warning-soft: #fffbeb;
-  --danger: #f43f5e;
-  --danger-soft: #fff1f2;
-  --info: #4f46e5;
-  --info-soft: rgba(79, 70, 229, 0.1);
+  /* ---- Tone text + control hovers (flip inside .dm-invert) ------------------- */
+  --tone-critical-text: #c53539;
+  --tone-high-text: #9a6c00;
+  --tone-medium-text: #5f6169;
+  --tone-success-text: #1e7a4e;
+  --btn-primary-text: #ffffff;
+  --btn-primary-hover: #26272b;
 
-  /* ---- Gradients -------------------------------------------------------- */
-  --grad-accent: linear-gradient(120deg, var(--accent), var(--accent-2));
-  --grad-brand: linear-gradient(120deg, var(--brand-blue), var(--brand-cyan) 52%, var(--brand-lime));
+  /* ---- Type ----------------------------------------------------------------- */
+  --font-display: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* ---- Families --------------------------------------------------------- */
-  --font-display: "Space Grotesk", Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-body: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
-
-  /* ---- Type scale ------------------------------------------------------- */
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.375rem;
-  --text-2xl: 1.75rem;
-  --text-3xl: 2.25rem;
-  --text-4xl: 3rem;
-  --text-5xl: 3.75rem;
-
-  /* ---- Weights ---------------------------------------------------------- */
-  --weight-regular: 400;
-  --weight-medium: 500;
-  --weight-semibold: 600;
-  --weight-bold: 700;
-
-  /* ---- Line heights ----------------------------------------------------- */
-  --leading-tight: 1.05;
-  --leading-snug: 1.2;
-  --leading-normal: 1.5;
-  --leading-relaxed: 1.7;
-
-  /* ---- Tracking --------------------------------------------------------- */
-  --tracking-display: -0.02em;
-  --tracking-normal: 0;
-  --tracking-eyebrow: 0.14em;
-  --tracking-caps: 0.22em;
-
-  /* ---- Radii ------------------------------------------------------------ */
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.25rem;
-  --radius-2xl: 1.5rem;
+  /* ---- Radii (playful, per Once UI) ------------------------------------------- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
   --radius-pill: 999px;
 
-  /* ---- Shadows ---------------------------------------------------------- */
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
-  --shadow-md: 0 8px 24px -8px rgba(15, 23, 42, 0.12), 0 2px 6px rgba(15, 23, 42, 0.05);
-  --shadow-lg: 0 24px 60px -20px rgba(15, 23, 42, 0.22);
-  --shadow-accent: 0 10px 24px -10px rgba(79, 70, 229, 0.7);
+  /* ---- Shadows (barely there) ---------------------------------------------------- */
+  --shadow-sm: 0 1px 2px rgba(10, 10, 11, 0.04);
+  --shadow-md: 0 12px 32px -16px rgba(10, 10, 11, 0.14);
+  --shadow-lg: 0 40px 80px -40px rgba(10, 10, 11, 0.22), 0 12px 32px -20px rgba(10, 10, 11, 0.1);
 
-  /* ---- Motion ----------------------------------------------------------- */
+  /* ---- Motion ----------------------------------------------------------------------- */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-soft: ease;
-  --dur-fast: 0.18s;
-  --dur-base: 0.25s;
+  --dur-fast: 0.16s;
+  --dur-base: 0.26s;
   --dur-slow: 0.6s;
 
   font-family: var(--font-body);
@@ -125,6 +91,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color-scheme: light;
 }
 
 html { scroll-behavior: smooth; }
@@ -134,170 +101,222 @@ body {
   min-width: 320px;
   font-family: var(--font-body);
   color: var(--ink);
-  background: var(--page);
+  /* Transparent so the fixed .dm-aura layer (z-index -1) shows above the
+     canvas background painted by :root. */
+  background: transparent;
   overflow-x: hidden;
 }
 
 button, a, input, select, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
-
-::selection { color: #fff; background: var(--accent); }
+::selection { color: #ffffff; background: var(--accent); }
 
 h1, h2, h3, h4, .display-font {
   font-family: var(--font-display);
-  letter-spacing: var(--tracking-display);
+  letter-spacing: -0.03em;
 }
 
-/* ---- Brand text treatments ---------------------------------------------- */
-.gradient-text {
-  background: var(--grad-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* ---- Cyan aura — the Magic Portfolio light-theme signature ------------------- */
+.dm-aura {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 62% 46% at 50% 2%, rgba(173, 231, 246, 0.55), transparent 70%),
+    radial-gradient(ellipse 85% 62% at 50% 18%, rgba(125, 214, 238, 0.3), transparent 72%);
+  transform-origin: 50% 0%;
+  animation: dmaura 16s var(--ease-soft) infinite;
+}
+@keyframes dmaura {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.82; transform: scale(1.045); }
 }
 
-.brand-text {
-  background: var(--grad-brand);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* ---- Inverted scope ----------------------------------------------------------- */
+/* Wrap any block in .dm-invert to flip it to the dark variant of the theme —
+   used for the product mocks, the featured plan, the closing CTA, and the
+   footer. Everything that consumes tokens inverts automatically. */
+.dm-invert {
+  --page: #0b0c0e;
+  --page-2: #14161b;
+  --panel: #16181d;
+  --panel-2: rgba(255, 255, 255, 0.07);
+  --panel-solid: #101216;
+  --ink: #f2f4f8;
+  --ink-soft: #c6cad2;
+  --ink-muted: #9096a0;
+  --ink-faint: #6b717c;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-soft: rgba(255, 255, 255, 0.05);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --accent: #35c6de;
+  --accent-deep: #5ed4e8;
+  --accent-soft: rgba(53, 198, 222, 0.1);
+  --accent-glow: rgba(53, 198, 222, 0.14);
+  --urg-critical: #ff6369;
+  --urg-high: #ffc53d;
+  --urg-medium: #9096a0;
+  --urg-low: #3dd68c;
+  --urg-critical-soft: rgba(255, 99, 105, 0.12);
+  --urg-high-soft: rgba(255, 197, 61, 0.12);
+  --urg-medium-soft: rgba(139, 144, 154, 0.14);
+  --urg-low-soft: rgba(61, 214, 140, 0.12);
+  --tone-critical-text: #ff7d82;
+  --tone-high-text: #ffd166;
+  --tone-medium-text: #a5aab4;
+  --tone-success-text: #4fe09c;
+  --btn-primary-text: #0b0c0e;
+  --btn-primary-hover: #d5d9e0;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 12px 32px -16px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 40px 80px -40px rgba(0, 0, 0, 0.7), 0 12px 32px -20px rgba(0, 0, 0, 0.5);
+  color: var(--ink);
 }
 
-/* ---- Mono kicker — the structural spine --------------------------------- */
-.dm-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+/* ---- Small data text --------------------------------------------------------- */
+.mono {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Eyebrow ------------------------------------------------------------------- */
+.dm-kicker {
+  display: inline-block;
+  font-size: 0.84rem;
   font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+}
+
+/* ---- Containers ------------------------------------------------------------------ */
+.dm-wrap { width: 100%; max-width: 74rem; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+.dm-wrap-narrow { width: 100%; max-width: 46rem; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+
+/* ---- Nav link ----------------------------------------------------------------------- */
+.nav-link {
   color: var(--ink-muted);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-soft);
 }
-.dm-kicker::before {
-  content: "";
-  width: 18px;
-  height: 9px;
-  border-radius: 3px;
-  background: var(--grad-accent);
-  flex-shrink: 0;
-}
-.dm-kicker.on-dark { color: rgba(255, 255, 255, 0.66); }
-
-/* ---- Containers --------------------------------------------------------- */
-.dm-wrap { max-width: 78rem; margin: 0 auto; padding: 0 28px; width: 100%; }
-.dm-wrap-narrow { max-width: 52rem; margin: 0 auto; padding: 0 28px; width: 100%; }
-
-/* ---- Nav link underline ------------------------------------------------- */
-.nav-link { position: relative; color: var(--ink-soft); transition: color var(--dur-fast) var(--ease-soft); }
 .nav-link:hover { color: var(--ink); }
-.nav-link::after {
-  position: absolute; right: 0; bottom: -0.4rem; left: 0; height: 2px; content: "";
-  border-radius: var(--radius-pill); background: var(--grad-accent);
-  transform: scaleX(0); transform-origin: right; transition: transform 0.22s var(--ease-soft);
-}
-.nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
 
-/* ---- Decorative grid backdrop ------------------------------------------- */
-.grid-bg {
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 56px 56px;
-  -webkit-mask-image: radial-gradient(80% 70% at 50% 0%, #000, transparent 78%);
-  mask-image: radial-gradient(80% 70% at 50% 0%, #000, transparent 78%);
+.quiet-link { color: var(--ink-muted); text-decoration: none; transition: color var(--dur-fast) var(--ease-soft); }
+.quiet-link:hover { color: var(--ink); }
+
+/* ============================================================================
+   PLAYFUL MOTION (Duolingo-inspired)
+   ============================================================================ */
+
+/* Floating hero satellites — gentle bobbing, like Duolingo's character
+   cluster. Two phases so neighbors never move in sync. */
+.dm-float { animation: dmfloat 5.2s ease-in-out infinite; }
+.dm-float-alt { animation: dmfloat 6.4s ease-in-out 1.1s infinite reverse; }
+@keyframes dmfloat {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-10px) rotate(1.5deg); }
 }
-.grid-bg-dark {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 56px 56px;
-  -webkit-mask-image: radial-gradient(80% 80% at 50% 30%, #000, transparent 80%);
-  mask-image: radial-gradient(80% 80% at 50% 30%, #000, transparent 80%);
+
+/* Hero satellite chips hide on smaller screens where they would collide. */
+@media (max-width: 980px) { .dm-hero-chip { display: none !important; } }
+
+/* Logo wiggle on hover — the owl says hi. */
+.dm-logo-mark:hover { animation: dmwiggle 0.55s var(--ease-soft); }
+@keyframes dmwiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-6deg); }
+  60% { transform: rotate(5deg); }
+}
+
+/* ---- University marquee -------------------------------------------------------- */
+.dm-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
+}
+.dm-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: dmmarquee 36s linear infinite;
+}
+.dm-marquee:hover .dm-marquee-track { animation-play-state: paused; }
+@keyframes dmmarquee { to { transform: translateX(-50%); } }
+
+/* ---- Footer watermark ----------------------------------------------------------- */
+.dm-watermark {
+  margin: 44px 0 -14px;
+  overflow: hidden;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3.4rem, 13.5vw, 12.5rem);
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  color: var(--ink);
+  opacity: 0.14;
+  -webkit-mask-image: linear-gradient(180deg, #000 30%, rgba(0, 0, 0, 0.25) 78%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 30%, rgba(0, 0, 0, 0.25) 78%, transparent 100%);
 }
 
 /* ============================================================================
-   LAYOUT SYSTEM — full-bleed, asymmetric, bento
+   LAYOUT
    ============================================================================ */
+.dm-split { display: grid; gap: 44px; grid-template-columns: 1fr; align-items: center; }
+@media (min-width: 1000px) { .dm-split { grid-template-columns: 1.02fr 0.98fr; gap: 72px; } }
 
-/* ---- Hero: asymmetric split --------------------------------------------- */
-.dm-hero { display: grid; gap: 48px; grid-template-columns: 1fr; align-items: center; }
-@media (min-width: 980px) { .dm-hero { grid-template-columns: 0.92fr 1.08fr; gap: 44px; } }
-
-/* ---- Generic asymmetric split ------------------------------------------- */
-.dm-split { display: grid; gap: 40px; grid-template-columns: 1fr; align-items: center; }
-@media (min-width: 980px) { .dm-split { grid-template-columns: 1.04fr 0.96fr; gap: 56px; } }
-@media (min-width: 980px) { .dm-split-rev > :first-child { order: 2; } .dm-split-rev > :last-child { order: 1; } }
-
-/* ---- Bento feature grid ------------------------------------------------- */
-.dm-bento { display: grid; gap: 16px; grid-template-columns: 1fr; }
-@media (min-width: 680px) { .dm-bento { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1000px) {
-  .dm-bento { grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(170px, auto); grid-auto-flow: dense; }
-  .dm-bento .b-w2 { grid-column: span 2; }
-  .dm-bento .b-h2 { grid-row: span 2; }
-}
-
-/* ---- Step timeline ------------------------------------------------------ */
-.dm-steps { display: grid; gap: 18px; grid-template-columns: 1fr; }
-@media (min-width: 760px) { .dm-steps { grid-template-columns: repeat(4, 1fr); } }
-
-/* ---- 3-up grids (features / testimonials / pricing) --------------------- */
-.dm-grid-3 { display: grid; gap: 18px; grid-template-columns: 1fr; }
+.dm-grid-3 { display: grid; gap: 20px; grid-template-columns: 1fr; }
 @media (min-width: 680px) { .dm-grid-3 { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1000px) { .dm-grid-3 { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1040px) { .dm-grid-3 { grid-template-columns: repeat(3, 1fr); } }
 
-/* ---- FAQ: sticky heading + accordion ------------------------------------ */
-.dm-faq { display: grid; gap: 28px; grid-template-columns: 1fr; align-items: start; }
-@media (min-width: 920px) { .dm-faq { grid-template-columns: 0.82fr 1.18fr; gap: 56px; } .dm-faq-head { position: sticky; top: 96px; } }
+.dm-feature-list { display: grid; gap: 0 40px; grid-template-columns: 1fr; }
+@media (min-width: 680px) { .dm-feature-list { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1040px) { .dm-feature-list { grid-template-columns: repeat(4, 1fr); } }
 
-/* ---- Stats band --------------------------------------------------------- */
-.dm-stats { display: grid; gap: 28px 18px; grid-template-columns: 1fr; }
+.dm-showcase { display: grid; gap: 20px; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .dm-showcase { grid-template-columns: 1fr 1fr; } }
+
+.dm-steps { display: grid; gap: 40px 40px; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .dm-steps { grid-template-columns: repeat(4, 1fr); gap: 0 40px; } }
+
+.dm-stats { display: grid; gap: 36px 24px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 860px) { .dm-stats { grid-template-columns: repeat(4, 1fr); } }
 .dm-stats > * { min-width: 0; }
-@media (min-width: 460px) { .dm-stats { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 820px) { .dm-stats { grid-template-columns: repeat(4, 1fr); } }
 
-/* ---- Footer ------------------------------------------------------------- */
+.dm-quotes { display: grid; gap: 20px; grid-template-columns: 1fr; }
+@media (min-width: 860px) { .dm-quotes { grid-template-columns: 1fr 1fr; } }
+
 .dm-footer-grid { display: grid; gap: 40px; grid-template-columns: 1fr 1fr; }
-@media (min-width: 860px) { .dm-footer-grid { grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 48px; } }
+@media (min-width: 880px) { .dm-footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; gap: 52px; } }
 
-/* ---- Nav responsive ----------------------------------------------------- */
+/* ---- Hero dashboard columns ------------------------------------------------ */
+.dm-mock-cols { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .dm-mock-cols { grid-template-columns: 1.5fr 1fr; } }
+
+/* ---- Nav responsive ----------------------------------------------------------- */
 .dm-burger { display: none !important; }
-@media (max-width: 900px) {
+@media (max-width: 920px) {
   .dm-navlinks, .dm-signin { display: none !important; }
   .dm-burger { display: grid !important; }
 }
-@media (min-width: 901px) { .dm-mobile-menu { display: none !important; } }
+@media (min-width: 921px) { .dm-mobile-menu { display: none !important; } }
 
-/* Collapse the dashboard mock to a single column on small screens */
 @media (max-width: 700px) {
   .dm-demo-inner { grid-template-columns: 1fr !important; }
   .dm-demo-aside { display: none !important; }
 }
-
-/* Drop the logo wordmark on very small phones to keep the nav on one line */
 @media (max-width: 420px) { .dm-logo-word { display: none !important; } }
-@media (max-width: 560px) {
-  .dm-wrap, .dm-wrap-narrow { padding: 0 18px; }
-  .dm-hero-float { display: none !important; }
-}
 
-/* ---- University marquee ------------------------------------------------- */
-.dm-marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
-.dm-marquee-track { display: flex; align-items: center; gap: 56px; width: max-content; animation: dmmarquee 34s linear infinite; }
-.dm-marquee:hover .dm-marquee-track { animation-play-state: paused; }
-
-/* ---- Animations --------------------------------------------------------- */
-@keyframes dmfloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-@keyframes dmfloat2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
-@keyframes dmtoast { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes dmmarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+/* ---- Animations ------------------------------------------------------------------ */
+@keyframes dmtoast { from { opacity: 0; transform: translate(-50%, 16px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@keyframes dmrise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes dmpulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
-@keyframes dmrise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-.dm-rise { animation: dmrise 0.7s var(--ease-out) both; }
+.dm-rise { animation: dmrise 0.8s var(--ease-out) both; }
+.dm-pulse { animation: dmpulse 2s var(--ease-soft) infinite; }
 
-/* ---- Accessibility ------------------------------------------------------ */
+/* ---- Accessibility ------------------------------------------------------------------- */
 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;

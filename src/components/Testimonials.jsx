@@ -1,13 +1,10 @@
 import React from 'react';
 import { Card } from './ui/Card.jsx';
-import { Icons } from './ui/icons.jsx';
-import { SectionHead } from './ui/layout.jsx';
+import { Kicker } from './ui/layout.jsx';
+import { Reveal } from './ui/motion.jsx';
 
-const Avatar = ({ a, dark }) => (
-  <span style={{ display: 'grid', placeItems: 'center', width: 44, height: 44, borderRadius: '50%', background: dark ? 'rgba(255,255,255,0.14)' : 'var(--grad-accent)', color: '#fff', fontWeight: 700, flexShrink: 0 }}>{a}</span>
-);
-const Stars = () => (
-  <div style={{ display: 'flex', gap: 2 }}>{Array.from({ length: 5 }).map((_, i) => <Icons.Star key={i} size={15} color="var(--urg-medium)" style={{ fill: 'var(--urg-medium)' }} />)}</div>
+const Avatar = ({ a }) => (
+  <span style={{ display: 'grid', placeItems: 'center', width: 38, height: 38, borderRadius: '50%', background: 'var(--panel-2)', border: '1px solid var(--line)', color: 'var(--ink)', fontSize: '0.86rem', fontWeight: 600, flexShrink: 0 }}>{a}</span>
 );
 
 export default function Testimonials() {
@@ -16,36 +13,41 @@ export default function Testimonials() {
     ['Built for actual university life.', 'Structured enough for modules and exams, but clean enough to open every single morning.', 'Maya', 'Business, final year', 'M'],
   ];
   return (
-    <section style={{ padding: '80px 0' }}>
+    <section style={{ padding: '104px 0' }}>
       <div className="dm-wrap">
-        <SectionHead kicker="Loved by students" title="A calmer semester starts with a" accent="better system." />
-        <div className="dm-split" style={{ marginTop: 44, alignItems: 'stretch' }}>
-          <Card dark padding="xl" style={{ display: 'flex', flexDirection: 'column' }}>
-            <Stars />
-            <p style={{ margin: '20px 0 0', fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem,2.6vw,2rem)', fontWeight: 700, lineHeight: 1.25, letterSpacing: '-0.02em', color: '#fff' }}>
+        {/* One large centered quote */}
+        <Reveal style={{ textAlign: 'center', maxWidth: '50rem', margin: '0 auto' }}>
+          <Kicker>Loved by students</Kicker>
+          <blockquote style={{ margin: '26px 0 0', padding: 0 }}>
+            <p style={{ margin: 0, fontFamily: 'var(--font-display)', fontSize: 'clamp(1.5rem,3.2vw,2.3rem)', fontWeight: 550, lineHeight: 1.25, letterSpacing: '-0.03em', color: 'var(--ink)' }}>
               &ldquo;DeadlineMate genuinely saved my semester. I finally knew what mattered each day instead of opening five apps and guessing.&rdquo;
             </p>
-            <p style={{ margin: '18px 0 0', fontSize: '1rem', lineHeight: 1.7, color: 'rgba(255,255,255,0.7)', flex: 1 }}>
-              I went from missing two or three deadlines a term to handing everything in early. The reminders alone are worth it.
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 28 }}>
-              <Avatar a="A" dark />
-              <div><p style={{ margin: 0, fontWeight: 700, color: '#fff' }}>Aisha R.</p><p style={{ margin: '2px 0 0', fontSize: '0.85rem', color: 'rgba(255,255,255,0.55)' }}>Psychology, 3rd year · University of Leeds</p></div>
+          </blockquote>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginTop: 28 }}>
+            <Avatar a="A" />
+            <div style={{ textAlign: 'left' }}>
+              <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: 'var(--ink)' }}>Aisha R.</p>
+              <p style={{ margin: '2px 0 0', fontSize: '0.8rem', color: 'var(--ink-muted)' }}>Psychology, 3rd year · University of Leeds</p>
             </div>
-          </Card>
-          <div style={{ display: 'grid', gap: 18 }}>
-            {side.map(([q, b, n, r, a]) => (
-              <Card key={n} hover padding="lg" style={{ display: 'flex', flexDirection: 'column' }}>
-                <Stars />
-                <p style={{ margin: '14px 0 0', fontSize: '1.1rem', fontWeight: 700, color: 'var(--ink)' }}>{q}</p>
-                <p style={{ margin: '10px 0 0', flex: 1, fontSize: '0.92rem', lineHeight: 1.6, color: 'var(--ink-soft)' }}>{b}</p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 20 }}>
-                  <Avatar a={a} />
-                  <div><p style={{ margin: 0, fontWeight: 700, color: 'var(--ink)' }}>{n}</p><p style={{ margin: '2px 0 0', fontSize: '0.83rem', color: 'var(--ink-muted)' }}>{r}</p></div>
-                </div>
-              </Card>
-            ))}
           </div>
+        </Reveal>
+
+        <div className="dm-quotes" style={{ marginTop: 64, maxWidth: '58rem', marginLeft: 'auto', marginRight: 'auto' }}>
+          {side.map(([q, b, n, r, a], i) => (
+            <Reveal key={n} delay={i * 0.08} style={{ display: 'flex', flexDirection: 'column' }}>
+            <Card hover padding="xl" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <p style={{ margin: 0, fontSize: '1.05rem', fontWeight: 600, letterSpacing: '-0.01em', color: 'var(--ink)' }}>{q}</p>
+              <p style={{ margin: '10px 0 0', flex: 1, fontSize: '0.92rem', lineHeight: 1.65, color: 'var(--ink-muted)' }}>{b}</p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 24 }}>
+                <Avatar a={a} />
+                <div>
+                  <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: 'var(--ink)' }}>{n}</p>
+                  <p style={{ margin: '2px 0 0', fontSize: '0.8rem', color: 'var(--ink-muted)' }}>{r}</p>
+                </div>
+              </div>
+            </Card>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

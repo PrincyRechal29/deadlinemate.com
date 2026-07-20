@@ -1,20 +1,19 @@
 import React from 'react';
+import { Reveal } from './motion.jsx';
 
-// Shared layout primitives for the marketing sections.
-// WRAP kept for inline use; prefer the .dm-wrap class for full-width sections.
-export const WRAP = { maxWidth: '78rem', margin: '0 auto', padding: '0 28px', width: '100%' };
+// Shared layout primitives. Prefer the .dm-wrap class for full-width sections.
+export const WRAP = { width: '100%', maxWidth: '74rem', margin: '0 auto', padding: '0 clamp(20px,4vw,48px)' };
 
-/** Mono kicker label — the structural spine. e.g. <Kicker>Features</Kicker> */
-export const Kicker = ({ children, onDark = false }) => (
-  <span className={`dm-kicker${onDark ? ' on-dark' : ''}`}>{children}</span>
-);
+/** Cyan eyebrow label — the only recurring accent moment. */
+export const Kicker = ({ children }) => <span className="dm-kicker">{children}</span>;
 
 /**
- * Editorial section header. Left-aligned by default (`align`), with an optional
- * trailing slot for actions/meta that sits opposite the heading on wide screens.
+ * Section header. Pure type hierarchy — eyebrow, oversized headline, quiet
+ * sub — with an optional trailing `aside` slot on wide screens. Fades up on
+ * scroll.
  */
-export const SectionHead = ({ kicker, title, accent, sub, align = 'left', max = '38rem', aside = null }) => (
-  <div
+export const SectionHead = ({ kicker, title, sub, align = 'left', aside = null }) => (
+  <Reveal
     style={{
       display: 'flex',
       flexWrap: 'wrap',
@@ -24,13 +23,13 @@ export const SectionHead = ({ kicker, title, accent, sub, align = 'left', max = 
       textAlign: align,
     }}
   >
-    <div style={{ maxWidth: max, margin: align === 'center' ? '0 auto' : 0 }}>
+    <div style={{ maxWidth: '42rem', margin: align === 'center' ? '0 auto' : 0 }}>
       {kicker && <Kicker>{kicker}</Kicker>}
-      <h2 style={{ margin: '18px 0 0', fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem,4.4vw,3rem)', fontWeight: 700, letterSpacing: '-0.025em', color: 'var(--ink)', lineHeight: 1.08 }}>
-        {title} {accent && <span className="gradient-text">{accent}</span>}
+      <h2 style={{ margin: kicker ? '14px 0 0' : 0, fontFamily: 'var(--font-display)', fontSize: 'clamp(1.9rem,4vw,2.9rem)', fontWeight: 600, letterSpacing: '-0.035em', color: 'var(--ink)', lineHeight: 1.08 }}>
+        {title}
       </h2>
-      {sub && <p style={{ margin: '16px 0 0', maxWidth: '36rem', fontSize: '1.05rem', lineHeight: 1.7, color: 'var(--ink-soft)' }}>{sub}</p>}
+      {sub && <p style={{ margin: '18px 0 0', maxWidth: '36rem', fontSize: '1.08rem', lineHeight: 1.65, color: 'var(--ink-muted)' }}>{sub}</p>}
     </div>
     {aside}
-  </div>
+  </Reveal>
 );
