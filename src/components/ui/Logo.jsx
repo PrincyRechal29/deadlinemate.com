@@ -13,8 +13,8 @@ export function Logo({ compact = false, size = 34 }) {
       <svg className="dm-logo-mark" width={size} height={size} viewBox="0 0 64 64" role="img" aria-label="DeadlineMate logo" style={{ flexShrink: 0, display: 'block' }}>
         <defs>
           <linearGradient id={id} x1="8" y1="6" x2="58" y2="60" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#3ecde6" />
-            <stop offset="1" stopColor="#0a8fae" />
+            <stop stopColor="#e6c877" />
+            <stop offset="1" stopColor="#b08a2e" />
           </linearGradient>
         </defs>
         <rect width="64" height="64" rx="19" fill={`url(#${id})`} />
