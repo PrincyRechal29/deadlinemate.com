@@ -1,24 +1,12 @@
 import React from 'react';
 
-/**
- * Compact metric tile — icon, big value, label. Used in the hero mock and the
- * app dashboard stat strip.
- */
-export function StatTile({ icon = null, value, label, accent = 'var(--accent)' }) {
+/** Compact metric tile for the dashboard mock — quiet, hairline, no icons required. */
+export function StatTile({ icon = null, value, label, accent = 'var(--ink-muted)' }) {
   return (
-    <div
-      style={{
-        padding: '0.85rem',
-        background: 'var(--surface)',
-        border: '1px solid var(--line)',
-        borderRadius: 'var(--radius-lg)',
-      }}
-    >
-      {icon && <span style={{ color: accent, display: 'grid', width: 18, height: 18 }}>{icon}</span>}
-      <p style={{ margin: '0.5rem 0 0', fontFamily: 'var(--font-display)', fontSize: '1.35rem', fontWeight: 700, color: 'var(--ink)', letterSpacing: '-0.02em' }}>
-        {value}
-      </p>
-      <p style={{ margin: '0.1rem 0 0', fontSize: '0.7rem', color: 'var(--ink-muted)' }}>{label}</p>
+    <div style={{ padding: '0.95rem 1.05rem', background: 'var(--panel)', border: '1px solid var(--line)', borderRadius: 'var(--radius-md)' }}>
+      {icon && <span style={{ color: accent, display: 'grid', width: 17, height: 17 }}>{icon}</span>}
+      <p style={{ margin: icon ? '0.55rem 0 0' : 0, fontSize: '1.35rem', fontWeight: 600, letterSpacing: '-0.02em', color: 'var(--ink)' }}>{value}</p>
+      <p style={{ margin: '0.15rem 0 0', fontSize: '0.74rem', color: 'var(--ink-muted)' }}>{label}</p>
     </div>
   );
 }

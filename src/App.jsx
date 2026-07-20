@@ -1,4 +1,5 @@
 import React from 'react';
+import { MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
 import AnnouncementBar from './components/AnnouncementBar.jsx';
 import Navbar from './components/Navbar.jsx';
 import Hero from './components/Hero.jsx';
@@ -14,11 +15,29 @@ import CTA from './components/CTA.jsx';
 import Footer from './components/Footer.jsx';
 import Toast from './components/Toast.jsx';
 
+/** Duolingo-style scroll progress bar pinned to the top of the viewport. */
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
+  return (
+    <motion.div
+      aria-hidden
+      style={{
+        position: 'fixed', top: 0, left: 0, right: 0, height: 3, zIndex: 100,
+        background: 'var(--accent)', transformOrigin: '0%', scaleX,
+      }}
+    />
+  );
+}
+
 export default function App() {
   const [toast, setToast] = React.useState(false);
   const cta = () => setToast(true);
   return (
-    <div style={{ minHeight: '100vh', overflowX: 'hidden', background: 'var(--page)', color: 'var(--ink)' }}>
+    <MotionConfig reducedMotion="user">
+    <div style={{ minHeight: '100vh', overflowX: 'hidden', color: 'var(--ink)' }}>
+      <div className="dm-aura" aria-hidden />
+      <ScrollProgress />
       <AnnouncementBar onCta={cta} />
       <Navbar onCta={cta} />
       <main>
@@ -36,5 +55,6 @@ export default function App() {
       <Footer />
       <Toast show={toast} onClose={() => setToast(false)} />
     </div>
+    </MotionConfig>
   );
 }

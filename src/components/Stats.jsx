@@ -1,27 +1,27 @@
 import React from 'react';
+import { Reveal, CountUp } from './ui/motion.jsx';
 
 const stats = [
-  ['10,000+', 'deadlines tracked', 'every term across our student community'],
-  ['93%', 'submitted on time', 'up from 71% before students started using DeadlineMate'],
-  ['5 hrs', 'saved each week', 'less time planning, more time actually studying'],
-  ['40+', 'universities', 'students relying on DeadlineMate worldwide'],
+  ['10,000+', 'deadlines tracked every term'],
+  ['93%', 'of work submitted on time'],
+  ['5 hrs', 'saved each week on planning'],
+  ['40+', 'universities worldwide'],
 ];
 
+/** Quiet numbers between hairlines — they count up as they scroll into view. */
 export default function Stats() {
   return (
-    <section style={{ padding: '28px 0 80px' }}>
+    <section style={{ padding: '0 0 104px' }}>
       <div className="dm-wrap">
-        <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-2xl)', padding: 'clamp(32px,5vw,56px)', background: 'linear-gradient(125deg, var(--brand-blue), var(--accent) 48%, var(--accent-2))', boxShadow: 'var(--shadow-lg)' }}>
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(30rem 16rem at 90% 120%, rgba(181,240,90,0.25), transparent 60%)' }} />
-          <div className="dm-stats" style={{ position: 'relative' }}>
-            {stats.map(([v, l, d]) => (
-              <div key={l}>
-                <p style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: 'clamp(2rem,3.4vw,3rem)', fontWeight: 700, letterSpacing: '-0.04em', color: '#fff', lineHeight: 1 }}>{v}</p>
-                <p style={{ margin: '12px 0 0', fontSize: '0.95rem', fontWeight: 700, color: '#fff' }}>{l}</p>
-                <p style={{ margin: '6px 0 0', fontSize: '0.82rem', lineHeight: 1.55, color: 'rgba(255,255,255,0.78)' }}>{d}</p>
-              </div>
-            ))}
-          </div>
+        <div className="dm-stats" style={{ padding: '48px 0', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+          {stats.map(([v, l], i) => (
+            <Reveal key={l} delay={i * 0.06}>
+              <p style={{ margin: 0, fontFamily: 'var(--font-display)', fontSize: 'clamp(2.1rem,3.6vw,3rem)', fontWeight: 600, letterSpacing: '-0.04em', color: 'var(--ink)', lineHeight: 1 }}>
+                <CountUp value={v} />
+              </p>
+              <p style={{ margin: '10px 0 0', fontSize: '0.88rem', lineHeight: 1.5, color: 'var(--ink-muted)' }}>{l}</p>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

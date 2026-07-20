@@ -1,44 +1,33 @@
 import React from 'react';
 
 /**
- * Small status pill. The `urgency` tones (critical/high/medium/low) are the
- * product's deadline language; `tone` covers generic neutral/accent/success
- * labels. `dot` prefixes a colored indicator.
+ * Quiet status chip. Sentence case, soft tint, no border noise. Urgency tones
+ * (critical/high/medium/low) are the product's deadline language.
  */
 export function Badge({ children, tone = 'neutral', dot = false, size = 'md', ...rest }) {
   const tones = {
-    neutral: { color: 'var(--ink-soft)', bg: 'var(--page-tint)', dot: 'var(--ink-muted)' },
-    accent: { color: 'var(--accent)', bg: 'var(--accent-soft)', dot: 'var(--accent)' },
-    success: { color: '#047857', bg: 'var(--success-soft)', dot: 'var(--success)' },
-    critical: { color: '#be123c', bg: 'var(--urg-critical-soft)', dot: 'var(--urg-critical)' },
-    high: { color: '#c2410c', bg: 'var(--urg-high-soft)', dot: 'var(--urg-high)' },
-    medium: { color: '#b45309', bg: 'var(--urg-medium-soft)', dot: 'var(--urg-medium)' },
-    low: { color: '#047857', bg: 'var(--urg-low-soft)', dot: 'var(--urg-low)' },
+    neutral: { color: 'var(--ink-muted)', bg: 'var(--panel-2)', dot: 'var(--ink-faint)' },
+    accent: { color: 'var(--accent-deep)', bg: 'var(--accent-soft)', dot: 'var(--accent)' },
+    success: { color: 'var(--tone-success-text)', bg: 'var(--urg-low-soft)', dot: 'var(--urg-low)' },
+    critical: { color: 'var(--tone-critical-text)', bg: 'var(--urg-critical-soft)', dot: 'var(--urg-critical)' },
+    high: { color: 'var(--tone-high-text)', bg: 'var(--urg-high-soft)', dot: 'var(--urg-high)' },
+    medium: { color: 'var(--tone-medium-text)', bg: 'var(--urg-medium-soft)', dot: 'var(--urg-medium)' },
+    low: { color: 'var(--tone-success-text)', bg: 'var(--urg-low-soft)', dot: 'var(--urg-low)' },
   };
   const t = tones[tone] || tones.neutral;
-  const pad = size === 'sm' ? '0.15rem 0.5rem' : '0.3rem 0.7rem';
-  const fz = size === 'sm' ? '0.68rem' : '0.74rem';
+  const pad = size === 'sm' ? '0.22rem 0.55rem' : '0.32rem 0.7rem';
+  const fz = size === 'sm' ? '0.7rem' : '0.76rem';
 
   return (
     <span
       style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: '0.4rem',
-        padding: pad,
-        fontFamily: 'var(--font-body)',
-        fontSize: fz,
-        fontWeight: 600,
-        lineHeight: 1,
-        letterSpacing: '0.01em',
-        color: t.color,
-        background: t.bg,
-        borderRadius: 'var(--radius-pill)',
-        whiteSpace: 'nowrap',
+        display: 'inline-flex', alignItems: 'center', gap: '0.38rem', padding: pad,
+        fontSize: fz, fontWeight: 550, lineHeight: 1, letterSpacing: '0.005em',
+        color: t.color, background: t.bg, borderRadius: 'var(--radius-pill)', whiteSpace: 'nowrap',
       }}
       {...rest}
     >
-      {dot && <span style={{ width: 7, height: 7, borderRadius: '50%', background: t.dot, flexShrink: 0 }} />}
+      {dot && <span style={{ width: 6, height: 6, borderRadius: '50%', background: t.dot, flexShrink: 0 }} />}
       {children}
     </span>
   );
