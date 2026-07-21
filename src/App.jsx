@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
 import AnnouncementBar from './components/AnnouncementBar.jsx';
 import Navbar from './components/Navbar.jsx';
@@ -31,8 +32,10 @@ function ScrollProgress() {
 }
 
 export default function App() {
+  const navigate = useNavigate();
   const [toast, setToast] = React.useState(false);
-  const cta = () => setToast(true);
+  // Landing CTAs take you into the product (which routes to login if needed).
+  const cta = () => navigate('/app');
   return (
     <MotionConfig reducedMotion="user">
     <div style={{ minHeight: '100vh', overflowX: 'hidden', color: 'var(--ink)' }}>
