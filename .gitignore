@@ -11,4 +11,6 @@ dist
 # Supabase local
 supabase/.branches
 supabase/.temp
+
+# Vercel
 .vercel
