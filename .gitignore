@@ -2,3 +2,15 @@ node_modules
 dist
 *.log
 .claude/
+
+# Env / secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# Supabase local
+supabase/.branches
+supabase/.temp
+
+# Vercel
+.vercel
