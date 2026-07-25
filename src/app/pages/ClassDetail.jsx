@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Copy, Check, CalendarPlus } from 'lucide-react';
+import { ArrowLeft, Plus, Check, CalendarPlus, CalendarClock, MessageSquare, Video, Users } from 'lucide-react';
 import { supabase } from '../lib/supabase.js';
 import { useAuth } from '../lib/AuthProvider.jsx';
 import { useSharedClasses, useClassDeadlines, useClassMutations } from '../lib/api.js';
@@ -10,6 +10,9 @@ import Modal from '../components/Modal.jsx';
 import Badge from '../../components/ui/Badge.jsx';
 import Button from '../../components/ui/Button.jsx';
 import { localInputToUtc } from '../lib/dates.js';
+import TeamChat from '../components/TeamChat.jsx';
+import TeamCalls from '../components/TeamCalls.jsx';
+import TeamMembers from '../components/TeamMembers.jsx';
 
 export default function ClassDetail() {
   const { id } = useParams();
@@ -21,8 +24,8 @@ export default function ClassDetail() {
   const { addDeadline, importDeadline } = useClassMutations();
 
   const [role, setRole] = React.useState(null);
+  const [tab, setTab] = React.useState('deadlines');
   const [addOpen, setAddOpen] = React.useState(false);
-  const [copied, setCopied] = React.useState(false);
   const [form, setForm] = React.useState({ title: '', due: '', type: 'assignment', notes: '' });
   const [added, setAdded] = React.useState({});
 
@@ -48,11 +51,6 @@ export default function ClassDetail() {
     setAdded((s) => ({ ...s, [d.id]: true }));
   };
 
-  const copyCode = () => {
-    navigator.clipboard.writeText(cls?.join_code || '');
-    setCopied(true); setTimeout(() => setCopied(false), 1500);
-  };
-
   if (!cls) return <div style={{ color: 'var(--ink-muted)' }}>Loading class… <button onClick={() => navigate('/app/classes')} style={linkBtn}>Back</button></div>;
 
   return (
@@ -63,40 +61,59 @@ export default function ClassDetail() {
 
       <PageHeader
         title={cls.name}
-        subtitle={cls.term || 'Shared deadlines everyone in this class can see.'}
-        action={canEdit && <Button variant="accent" iconLeft={<Plus size={17} />} onClick={() => setAddOpen(true)}>Add deadline</Button>}
+        subtitle={cls.term || 'Your team — shared deadlines, chat, and calls in one place.'}
+        action={tab === 'deadlines' && canEdit && <Button variant="accent" iconLeft={<Plus size={17} />} onClick={() => setAddOpen(true)}>Add deadline</Button>}
       />
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', marginBottom: '1.6rem', padding: '0.9rem 1.1rem', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', background: 'var(--accent-soft)' }}>
-        <div style={{ flex: 1 }}>
-          <div style={{ fontSize: '0.8rem', color: 'var(--ink-muted)' }}>Invite classmates with this code</div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', fontWeight: 600, color: 'var(--accent-deep)', letterSpacing: '0.06em' }}>{cls.join_code}</div>
-        </div>
-        <Button variant="secondary" iconLeft={copied ? <Check size={15} /> : <Copy size={15} />} onClick={copyCode}>{copied ? 'Copied' : 'Copy'}</Button>
+      {/* team tabs */}
+      <div role="tablist" style={{ display: 'flex', gap: '0.3rem', borderBottom: '1px solid var(--line)', marginBottom: '1.5rem', overflowX: 'auto' }}>
+        {[
+          { key: 'deadlines', label: 'Deadlines', icon: CalendarClock },
+          { key: 'chat', label: 'Chat', icon: MessageSquare },
+          { key: 'calls', label: 'Calls', icon: Video },
+          { key: 'members', label: 'Team', icon: Users },
+        ].map(({ key, label, icon: Icon }) => {
+          const on = tab === key;
+          return (
+            <button key={key} role="tab" aria-selected={on} onClick={() => setTab(key)} style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.45rem', padding: '0.6rem 0.9rem', cursor: 'pointer',
+              background: 'none', border: 'none', fontSize: '0.9rem', fontWeight: on ? 650 : 500, whiteSpace: 'nowrap',
+              color: on ? 'var(--ink)' : 'var(--ink-muted)', borderBottom: '2px solid ' + (on ? 'var(--accent)' : 'transparent'), marginBottom: -1,
+            }}>
+              <Icon size={16} strokeWidth={1.9} style={{ color: on ? 'var(--accent)' : 'currentColor' }} /> {label}
+            </button>
+          );
+        })}
       </div>
 
-      {isLoading ? (
-        <div style={{ color: 'var(--ink-muted)' }}>Loading…</div>
-      ) : deadlines.length === 0 ? (
-        <EmptyState icon={CalendarPlus} title="No shared deadlines yet"
-          hint={canEdit ? 'Add the first deadline — everyone who joins will see it.' : 'The class owner hasn\'t added any deadlines yet.'} />
-      ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-          {deadlines.map((d) => (
-            <div key={d.id} style={{ display: 'flex', alignItems: 'center', gap: '0.9rem', padding: '0.9rem 1.1rem', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', background: 'var(--panel)' }}>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontWeight: 550, color: 'var(--ink)' }}>{d.title}</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--ink-muted)', marginTop: 2 }}>{fmtDue(d.due_at, profile?.timezone)}</div>
+      {tab === 'deadlines' && (
+        isLoading ? (
+          <div style={{ color: 'var(--ink-muted)' }}>Loading…</div>
+        ) : deadlines.length === 0 ? (
+          <EmptyState icon={CalendarPlus} title="No shared deadlines yet"
+            hint={canEdit ? 'Add the first deadline — everyone who joins will see it.' : 'The team owner hasn\'t added any deadlines yet.'} />
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+            {deadlines.map((d) => (
+              <div key={d.id} style={{ display: 'flex', alignItems: 'center', gap: '0.9rem', padding: '0.9rem 1.1rem', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', background: 'var(--panel)' }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontWeight: 550, color: 'var(--ink)' }}>{d.title}</div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--ink-muted)', marginTop: 2 }}>{fmtDue(d.due_at, profile?.timezone)}</div>
+                </div>
+                <Badge tone="neutral" size="sm">{d.type}</Badge>
+                <Button variant={added[d.id] ? 'secondary' : 'accent'} size="sm" iconLeft={added[d.id] ? <Check size={14} /> : <CalendarPlus size={14} />}
+                  disabled={added[d.id]} onClick={() => pull(d)}>
+                  {added[d.id] ? 'Added' : 'Add to mine'}
+                </Button>
               </div>
-              <Badge tone="neutral" size="sm">{d.type}</Badge>
-              <Button variant={added[d.id] ? 'secondary' : 'accent'} size="sm" iconLeft={added[d.id] ? <Check size={14} /> : <CalendarPlus size={14} />}
-                disabled={added[d.id]} onClick={() => pull(d)}>
-                {added[d.id] ? 'Added' : 'Add to mine'}
-              </Button>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )
       )}
+
+      {tab === 'chat' && <TeamChat classId={id} />}
+      {tab === 'calls' && <TeamCalls classId={id} />}
+      {tab === 'members' && <TeamMembers cls={cls} />}
 
       <Modal open={addOpen} onClose={() => setAddOpen(false)} title="Add a shared deadline">
         <form onSubmit={submitDeadline}>
