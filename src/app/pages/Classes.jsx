@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Plus, Users, LogIn, ArrowRight } from 'lucide-react';
 import { useSharedClasses, useClassMutations } from '../lib/api.js';
 import { PageHeader, EmptyState, Field, fieldStyle } from '../components/ui.jsx';
@@ -15,6 +15,20 @@ export default function Classes() {
   const [form, setForm] = React.useState({ name: '', term: '' });
   const [code, setCode] = React.useState('');
   const [error, setError] = React.useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Invite links land here as /app/classes?join=CODE — open Join pre-filled.
+  React.useEffect(() => {
+    const invite = searchParams.get('join');
+    if (invite) {
+      setCode(invite);
+      setError('');
+      setJoinOpen(true);
+      searchParams.delete('join');
+      setSearchParams(searchParams, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const doCreate = async (e) => {
     e.preventDefault(); setError('');
@@ -38,8 +52,8 @@ export default function Classes() {
   return (
     <>
       <PageHeader
-        title="Shared classes"
-        subtitle="One person adds the deadlines, the whole class stays in sync."
+        title="Teams & shared classes"
+        subtitle="Create a team for a class — shared deadlines, group chat, and video calls in one place."
         action={
           <div style={{ display: 'flex', gap: '0.5rem' }}>
             <Button variant="secondary" iconLeft={<LogIn size={16} />} onClick={() => { setError(''); setJoinOpen(true); }}>Join</Button>
